@@ -1,3 +1,12 @@
+/* Vars to help with transition animations*/
+:root{
+    --tx:100;
+    --ty:100;
+    --scale:0.7;
+    --deg: 60deg;
+    --persp: 200px;
+}
+
 *{
     margin:0;
     padding:0;
@@ -38,6 +47,9 @@ header #timer{
 header #timer-num{
     color:#ffffff;
 }
+.tileHidden{
+    visibility: hidden;
+}
 
 #answer-row{
     display:flex;
@@ -53,7 +65,7 @@ header #timer-num{
     top:30%;
 }
 
-#answer-row li{
+#answer-row .tile {
     display:inline-block;
     list-style-type: none;
     height:100px;
@@ -67,6 +79,7 @@ header #timer-num{
     transition: .5s all ease;
     box-shadow: 0px 20px 50px #555;
     cursor: pointer;
+    transform: rotateX(0deg);
     
 }
 #answer-row .tile-value{
@@ -93,7 +106,7 @@ header #timer-num{
     align-content: center;
     perspective: 500px;
 }
-#tile-row li {
+#tile-row .tile ,  .tile{
     display:flex;
     flex-direction: row;
     justify-content: center;
@@ -121,3 +134,44 @@ header #timer-num{
 #tile-row li:hover{
     transform: rotateX(0deg) scale(1);
 }
+
+.setTileAnim {
+    animation:setTile .5s ease-in-out;
+    /* transition: 1s;
+    transform: rtateX(360deg); */
+    animation-delay: .2s;
+
+}
+
+.removeTileAnim .tile{
+    animation:removeTile 1s ease-in-out;
+}
+
+
+@keyframes setTile{
+    0%{
+        transform:
+        scale(var(--scale))
+        rotateX(var(--deg))
+        perspective(var(--persp));
+        
+    }
+    50%{
+        perspective: 50px;
+        transform:rotateX(20deg);
+    }
+    100%{
+        transform: 
+        translate3d(0px,-225px,0)
+        rotateX(0deg)
+        scale(1);
+        perspective: none;
+        visibility: hidden;
+    }
+}
+
+/* @keyframes removeTile(){
+
+} */
+
+ 

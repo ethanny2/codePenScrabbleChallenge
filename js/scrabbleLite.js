@@ -67,9 +67,9 @@ class AnswerGrid{
         this.spaceOffset = tileWidth;
         this.index; //Out of 7 possible keeps track of current index
     }
-    insertLetter(){
+    // insertLetter(){
 
-    }
+    // }
     removeLetter(){
 
     }
@@ -83,16 +83,57 @@ class AnswerGrid{
     }
 }
 
+/* When tile clicked play animation that adds it to the answer grid */
+function insertLetter(tile){
+    let inserted = tile.cloneNode(true);
+    inserted.classList.toggle('tileHidden');
+    let animation = tile.cloneNode(true);
+    let startRect = findAbsPos(tile);
 
+    animation.style.position =  'absolute';
+    console.log(startRect);
+    animation.style.left = startRect[0]+'px';
+    animation.style.top = startRect[1] + 'px';
+    console.log( animation.getBoundingClientRect());
 
+    tile.classList.toggle('tileHidden');
+    animation.classList.add('setTileAnim');
+    
+
+    /*Match animation timing to insert new elem */
+    document.body.appendChild(animation);
+    document.getElementById('answer-row').appendChild(inserted);  
+    /* Wait for the animation to finsh*/
+    setTimeout(()=>{
+        inserted.classList.toggle('tileHidden');
+        document.body.removeChild(animation);
+    },700);
+}
+
+/*https://www.quirksmode.org/js/findpos.html */
+function findAbsPos(obj){
+    console.log(obj);
+    let curleft = curtop = 0;
+    if(obj.offsetParent){
+        do{
+            curleft += obj.offsetLeft;
+            curtop += obj.offsetTop;
+        }while(obj = obj.offsetParent);
+    }
+    return [curleft,curtop];
+}
 
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
     /*Register click events for tiles*/
+    document.querySelectorAll('.tile').forEach(tile => tile.addEventListener('click', (e)=>{
+        insertLetter(e.target);
+    }));
     let answer = new AnswerGrid(document.getElementById('#answer-row'));
     gameLoop();
     
+
 });
 
 
