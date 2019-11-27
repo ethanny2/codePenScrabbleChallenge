@@ -7,4 +7,117 @@
 body,html{
     width:100%;
     height:100%;
+    font-family: 'News Cycle', sans-serif;
+}
+
+body{
+    background-color:#f090a0;
+}
+header{
+    position: absolute;
+    top:0;
+    left:0;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width:100%;
+    height:15%;
+    justify-content: flex-end;
+    align-items: center;
+    font-size:0.8em;
+    color:#0e0c0c;
+}
+header #score{
+    flex-basis: 10%;
+    padding:1%;
+}
+header #timer{
+    flex-grow: 1;
+    padding:1% 1% 1% 2%;
+}
+header #timer-num{
+    color:#ffffff;
+}
+
+#answer-row{
+    display:flex;
+    flex-direction: row;
+    position: relative;
+    box-shadow: -1em 1em 1em hsl(0, 0%, 31%);
+    justify-content: flex-start;
+    align-content: center;
+    width:700px;
+    margin:0 auto;
+    height:100px;
+    background-color:#f1e4e4;
+    top:30%;
+}
+
+#answer-row li{
+    display:inline-block;
+    list-style-type: none;
+    height:100px;
+    background-image: url("https://i.pinimg.com/originals/34/7b/05/347b05f70e3ec739230bb470bdda89d7.jpg");
+    width: 100px;
+    text-align:center;
+    font-family: 'News Cycle', sans-serif;
+    font-weight: 700;
+    font-size:2.5em;
+    line-height: 2.5em;
+    transition: .5s all ease;
+    box-shadow: 0px 20px 50px #555;
+    cursor: pointer;
+    
+}
+#answer-row .tile-value{
+    display:inline-block;
+    font-size:0.5em;
+    text-align: center;
+    padding-left: 1%;
+    transform: translateX(1.3em) translateY(1.6em);
+}
+#answer-row:hover{
+    transition:all .3s linear;
+    background-color:#fcf4f4;
+}
+#tile-row{
+    display: flex;
+    flex-direction: row;
+    width:700px;
+    position: relative;
+    top:50%;
+    margin: 0 auto;
+    height:100px;
+    perspective: 1px;
+    justify-content: space-around;
+    align-content: center;
+    perspective: 500px;
+}
+#tile-row li {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style-type: none;
+    height:100px;
+    background-image: url("https://i.pinimg.com/originals/34/7b/05/347b05f70e3ec739230bb470bdda89d7.jpg");
+    width: 100px;
+    text-align:center;
+    font-family: 'News Cycle', sans-serif;
+    font-weight: 700;
+    font-size:2.5em;
+    line-height: 2.5em;
+    transition: .5s all ease;
+    box-shadow: 0px 20px 50px #555;
+    transform: rotateX(60deg) scale(0.7);
+    perspective: 200px;
+    cursor: pointer;
+}
+.tile-value{
+    display:inline-block;
+    font-size:0.5em;
+    transform: translateX(1.5em) translateY(2em);
+}
+
+#tile-row li:hover{
+    transform: rotateX(0deg) scale(1);
 }
