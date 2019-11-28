@@ -49,6 +49,20 @@ header #timer{
 header #timer-num{
     color:#ffffff;
 }
+ #score-animation{
+    top:20%;
+    left:45%;
+    position: absolute;
+    color:#ffffff;
+    text-transform: capitalize;
+    font-size:1.5em;
+    opacity:0;
+}
+.scoredClass{
+    animation: scoreAnimation 2s linear;
+    animation-iteration-count: 1;
+}
+
 .tileHidden{
     visibility: hidden;
 }
@@ -97,7 +111,8 @@ header #timer-num{
 #tile-row{
     display: flex;
     flex-direction: row;
-    width:700px;
+    min-width:50%;
+    
     position: relative;
     top:50%;
     margin: 0 auto;
@@ -106,8 +121,10 @@ header #timer-num{
     justify-content: space-around;
     align-content: center;
     perspective: 500px;
+    /* border:1px solid red; */
+    width:700px;
 }
-#tile-row .tile ,  .tile{
+.tile{
     display:flex;
     flex-direction: row;
     justify-content: center;
@@ -120,11 +137,13 @@ header #timer-num{
     font-weight: 700;
     font-size:2.5em;
     line-height: 2.5em;
+
     transition: .5s all ease;
     box-shadow: 0px 20px 50px #555;
     transform: rotateX(60deg) scale(0.7);
     perspective: 200px;
     cursor: pointer;
+    max-width: 100px;
 }
 .tile-value{
     display:inline-block;
@@ -173,6 +192,16 @@ header #timer-num{
     }
 }
 
+@keyframes scoreAnimation{
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+        transform: translateY(-400px);
+    }
+}
+
 @keyframes removeTile{
     0%{
         transform: 
@@ -189,6 +218,7 @@ header #timer-num{
     100%{
         transform:
         translate3d(var(--tx), var(--ty), 0)
+        /* translate3d(var(--tx), var(--ty), 0) */
         scale(var(--scale))
         rotateX(var(--deg))
         perspective(var(--persp));
@@ -228,6 +258,50 @@ footer button:active{
     box-shadow: 0 3px 0 #89968f;
   top: 3px;
 }
+
+@media only screen and (max-width: 725px) {
+    #tile-row{
+        width:350px;
+        height:50px;
+        padding:0 3% 0 4%;        
+    }
+    
+    .tile{
+        height: 50px;
+        width: 50px;
+        line-height: 1em;
+        box-shadow: 0px 20px 50px #555;
+        transform: rotateX(50deg) scale(0.85);
+        perspective: 800px;
+    }
+    body{
+    }
+    #answer-row{
+        width:350px;
+        height: 50px;
+    }
+    #answer-row .tile{
+        height: 50px;
+        width: 50px;
+        line-height: 1.5em;
+        font-size: 2em;
+    }
+    #answer-row .tile-value{
+        font-size:0.4em;
+        text-align: center;
+        padding-left: 0;
+        transform: translateX(0.8em) translateY(1.5em);
+
+    }
+    .tile-value{
+        display:inline-block;
+        font-size:0.5em;
+        transform: translateX(0.3em) translateY(.9em);
+    }
+    footer{
+        top:70%;
+    }
+  }
 
 /*  
 :root{
