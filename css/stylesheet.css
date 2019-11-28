@@ -1,7 +1,9 @@
 /* Vars to help with transition animations*/
 :root{
-    --tx:100;
-    --ty:100;
+    --tx:0px; /* tx ty are end coordinates for the tile when placed in board*/
+    --ty:0px; 
+    --txs:0px;
+    --tys:0px;   /* Coordinates for where the animation should start, i.e position of clicked tile*/
     --scale:0.7;
     --deg: 60deg;
     --persp: 200px;
@@ -66,7 +68,6 @@ header #timer-num{
 }
 
 #answer-row .tile {
-    display:inline-block;
     list-style-type: none;
     height:100px;
     background-image: url("https://i.pinimg.com/originals/34/7b/05/347b05f70e3ec739230bb470bdda89d7.jpg");
@@ -139,19 +140,21 @@ header #timer-num{
     animation:setTile .5s ease-in-out;
     /* transition: 1s;
     transform: rtateX(360deg); */
-    animation-delay: .2s;
+    /* animation-delay: .2s; */
 
 }
 
-.removeTileAnim .tile{
-    animation:removeTile 1s ease-in-out;
+.removeTileAnim {
+    animation:removeTile .5s ease-in-out forwards;
+    /* animation-delay: .2s; */
 }
 
 
 @keyframes setTile{
     0%{
         transform:
-        scale(var(--scale))
+        /* translate3d(var(--txs), var(--tys), 0) */
+        /* scale(var(--scale)) */
         rotateX(var(--deg))
         perspective(var(--persp));
         
@@ -162,7 +165,7 @@ header #timer-num{
     }
     100%{
         transform: 
-        translate3d(0px,-225px,0)
+        translate3d(var(--tx), var(--ty), 0)
         rotateX(0deg)
         scale(1);
         perspective: none;
@@ -170,8 +173,71 @@ header #timer-num{
     }
 }
 
-/* @keyframes removeTile(){
+@keyframes removeTile{
+    0%{
+        transform: 
+        /* translate3d(var(--tx), var(--ty), 0) */
+        rotateX(0deg);
+        /* scale(1); */
+        perspective: none;
+       
+    }
+    50%{
+        perspective: 200px;
+        transform:rotateX(20deg);
+    }
+    100%{
+        transform:
+        translate3d(var(--tx), var(--ty), 0)
+        scale(var(--scale))
+        rotateX(var(--deg))
+        perspective(var(--persp));
+        visibility: hidden;
+    }
+}
 
-} */
+footer{
+    display:flex;
+    justify-content: flex-end;
+    padding: 1% 2% 1% 2%;
+    align-items: center;
+    position: relative;
+    bottom:0;
+    width:100%;
+    /* border:1px solid red; */
+    font-size:1.5em;
+    top:55%;
+}
+footer button{
+    font-family: 'News Cycle', sans-serif;
+    text-transform: uppercase;
+    padding:0.5%;
+    width:10%;
+    min-width: 100px;
+    background-color:#b6aeae;
+    color:rgb(22, 22, 22);
+    margin: 0 2% 0 2%;
+    font-size:0.8em;
+    border-radius: 5px;
+    box-shadow: 0px 5px 2px #89968f;
+    position: relative;
+    top: 0px;
+    transition: all ease 0.1s;
+}
+footer button:active{
+    box-shadow: 0 3px 0 #89968f;
+  top: 3px;
+}
 
- 
+/*  
+:root{
+    --tx:0px; 
+    --ty:0px; 
+    --txs:0px;
+    --tys:0px;   
+    --scale:0.7;
+    --deg: 60deg;
+    --persp: 200px;
+}
+
+*/
