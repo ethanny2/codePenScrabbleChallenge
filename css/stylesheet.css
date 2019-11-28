@@ -1,317 +1,309 @@
 /* Vars to help with transition animations*/
-:root{
-    --tx:0px; /* tx ty are end coordinates for the tile when placed in board*/
-    --ty:0px; 
-    --txs:0px;
-    --tys:0px;   /* Coordinates for where the animation should start, i.e position of clicked tile*/
-    --scale:0.7;
-    --deg: 60deg;
-    --persp: 200px;
+:root {
+  --tx: 0px; /* tx ty are end coordinates for the tile when placed in board*/
+  --ty: 0px;
+  --txs: 0px;
+  --tys: 0px; /* Coordinates for where the animation should start, i.e position of clicked tile*/
+  --scale: 0.7;
+  --deg: 60deg;
+  --persp: 200px;
+}
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    z-index: 1;
+  }
+  100% {
+    opacity: 0;
+    z-index: -1;
+  }
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing: border-box;
-}
-
-body,html{
-    width:100%;
-    height:100%;
-    font-family: 'News Cycle', sans-serif;
-}
-
-body{
-    background-color:#f090a0;
-}
-header{
-    position: absolute;
-    top:0;
-    left:0;
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width:100%;
-    height:15%;
-    justify-content: flex-end;
-    align-items: center;
-    font-size:0.8em;
-    color:#0e0c0c;
-}
-header #score{
-    flex-basis: 10%;
-    padding:1%;
-}
-header #timer{
-    flex-grow: 1;
-    padding:1% 1% 1% 2%;
-}
-header #timer-num{
-    color:#ffffff;
-}
- #score-animation{
-    top:20%;
-    left:45%;
-    position: absolute;
-    color:#ffffff;
-    text-transform: capitalize;
-    font-size:1.5em;
-    opacity:0;
-}
-.scoredClass{
-    animation: scoreAnimation 2s linear;
-    animation-iteration-count: 1;
-}
-
-.tileHidden{
+@keyframes setTile {
+  0% {
+    transform: rotateX(var(--deg)) perspective(var(--persp));
+  }
+  50% {
+    perspective: 50px;
+    transform: rotateX(20deg);
+  }
+  100% {
+    transform: translate3d(var(--tx), var(--ty), 0) rotateX(0deg) scale(1);
+    perspective: none;
     visibility: hidden;
+  }
 }
 
-#answer-row{
-    display:flex;
-    flex-direction: row;
-    position: relative;
-    box-shadow: -1em 1em 1em hsl(0, 0%, 31%);
-    justify-content: flex-start;
-    align-content: center;
-    width:700px;
-    margin:0 auto;
-    height:100px;
-    background-color:#f1e4e4;
-    top:30%;
+@keyframes scoreAnimation {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-400px);
+  }
+}
+
+@keyframes removeTile {
+  0% {
+    transform: rotateX(0deg);
+
+    perspective: none;
+  }
+  50% {
+    perspective: 200px;
+    transform: rotateX(20deg);
+  }
+  100% {
+    transform: translate3d(var(--tx), var(--ty), 0) scale(var(--scale))
+      rotateX(var(--deg)) perspective(var(--persp));
+    visibility: hidden;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  font-family: 'News Cycle', sans-serif;
+}
+
+body {
+  background-color: #f090a0;
+}
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 15%;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 0.8em;
+  color: #0e0c0c;
+}
+header #score {
+  flex-basis: 10%;
+  padding: 1%;
+}
+header #timer {
+  flex-grow: 1;
+  padding: 1% 1% 1% 2%;
+}
+header #timer-num {
+  color: #ffffff;
+}
+#score-animation {
+  top: 20%;
+  left: 45%;
+  position: absolute;
+  color: #ffffff;
+  text-transform: capitalize;
+  font-size: 1.5em;
+  opacity: 0;
+}
+.scoredClass {
+  animation: scoreAnimation 2s linear;
+  animation-iteration-count: 1;
+}
+
+.tileHidden {
+  visibility: hidden;
+}
+
+#answer-row {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  box-shadow: -1em 1em 1em hsl(0, 0%, 31%);
+  justify-content: flex-start;
+  align-content: center;
+  width: 700px;
+  margin: 0 auto;
+  height: 100px;
+  background-color: #f1e4e4;
+  top: 30%;
 }
 
 #answer-row .tile {
-    list-style-type: none;
-    height:100px;
-    background-image: url("https://i.pinimg.com/originals/34/7b/05/347b05f70e3ec739230bb470bdda89d7.jpg");
-    width: 100px;
-    text-align:center;
-    font-family: 'News Cycle', sans-serif;
-    font-weight: 700;
-    font-size:2.5em;
-    line-height: 2.5em;
-    transition: .5s all ease;
-    box-shadow: 0px 20px 50px #555;
-    cursor: pointer;
-    transform: rotateX(0deg);
-    
+  list-style-type: none;
+  height: 100px;
+  background-image: url('https://i.pinimg.com/originals/34/7b/05/347b05f70e3ec739230bb470bdda89d7.jpg');
+  width: 100px;
+  text-align: center;
+  font-family: 'News Cycle', sans-serif;
+  font-weight: 700;
+  font-size: 2.5em;
+  line-height: 2.5em;
+  transition: 0.5s all ease;
+  box-shadow: 0px 20px 50px #555;
+  cursor: pointer;
+  transform: rotateX(0deg);
 }
-#answer-row .tile-value{
-    display:inline-block;
-    font-size:0.5em;
-    text-align: center;
-    padding-left: 1%;
-    transform: translateX(1.3em) translateY(1.6em);
+#answer-row .tile-value {
+  display: inline-block;
+  font-size: 0.5em;
+  text-align: center;
+  padding-left: 1%;
+  transform: translateX(1.3em) translateY(1.6em);
 }
-#answer-row:hover{
-    transition:all .3s linear;
-    background-color:#fcf4f4;
+#answer-row:hover {
+  transition: all 0.3s linear;
+  background-color: #fcf4f4;
 }
-#tile-row{
-    display: flex;
-    flex-direction: row;
-    min-width:50%;
-    
-    position: relative;
-    top:50%;
-    margin: 0 auto;
-    height:100px;
-    perspective: 1px;
-    justify-content: space-around;
-    align-content: center;
-    perspective: 500px;
-    /* border:1px solid red; */
-    width:700px;
+#tile-row {
+  display: flex;
+  flex-direction: row;
+  min-width: 50%;
+  position: relative;
+  top: 50%;
+  margin: 0 auto;
+  height: 100px;
+  perspective: 1px;
+  justify-content: space-around;
+  align-content: center;
+  perspective: 500px;
+  width: 700px;
 }
-.tile{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    list-style-type: none;
-    height:100px;
-    background-image: url("https://i.pinimg.com/originals/34/7b/05/347b05f70e3ec739230bb470bdda89d7.jpg");
-    width: 100px;
-    text-align:center;
-    font-family: 'News Cycle', sans-serif;
-    font-weight: 700;
-    font-size:2.5em;
-    line-height: 2.5em;
-
-    transition: .5s all ease;
-    box-shadow: 0px 20px 50px #555;
-    transform: rotateX(60deg) scale(0.7);
-    perspective: 200px;
-    cursor: pointer;
-    max-width: 100px;
+.tile {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style-type: none;
+  height: 100px;
+  background-image: url('https://i.pinimg.com/originals/34/7b/05/347b05f70e3ec739230bb470bdda89d7.jpg');
+  width: 100px;
+  text-align: center;
+  font-family: 'News Cycle', sans-serif;
+  font-weight: 700;
+  font-size: 2.5em;
+  line-height: 2.5em;
+  transition: 0.5s all ease;
+  box-shadow: 0px 20px 50px #555;
+  transform: rotateX(60deg) scale(0.7);
+  perspective: 200px;
+  cursor: pointer;
+  max-width: 100px;
 }
-.tile-value{
-    display:inline-block;
-    font-size:0.5em;
-    transform: translateX(1.5em) translateY(2em);
+.tile-value {
+  display: inline-block;
+  font-size: 0.5em;
+  transform: translateX(1.5em) translateY(2em);
 }
 
-#tile-row li:hover{
-    transform: rotateX(0deg) scale(1);
+#tile-row li:hover {
+  transform: rotateX(0deg) scale(1);
 }
 
 .setTileAnim {
-    animation:setTile .5s ease-in-out;
-    /* transition: 1s;
-    transform: rtateX(360deg); */
-    /* animation-delay: .2s; */
-
+  animation: setTile 0.5s ease-in-out;
 }
 
 .removeTileAnim {
-    animation:removeTile .5s ease-in-out forwards;
-    /* animation-delay: .2s; */
+  animation: removeTile 0.5s ease-in-out forwards;
 }
 
-
-@keyframes setTile{
-    0%{
-        transform:
-        /* translate3d(var(--txs), var(--tys), 0) */
-        /* scale(var(--scale)) */
-        rotateX(var(--deg))
-        perspective(var(--persp));
-        
-    }
-    50%{
-        perspective: 50px;
-        transform:rotateX(20deg);
-    }
-    100%{
-        transform: 
-        translate3d(var(--tx), var(--ty), 0)
-        rotateX(0deg)
-        scale(1);
-        perspective: none;
-        visibility: hidden;
-    }
+footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1% 2% 1% 2%;
+  align-items: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  font-size: 1.5em;
+  top: 55%;
 }
-
-@keyframes scoreAnimation{
-    from{
-        opacity: 1;
-    }
-    to{
-        opacity: 0;
-        transform: translateY(-400px);
-    }
+footer button {
+  font-family: 'News Cycle', sans-serif;
+  text-transform: uppercase;
+  padding: 0.5%;
+  width: 10%;
+  min-width: 100px;
+  background-color: #b6aeae;
+  color: rgb(22, 22, 22);
+  margin: 0 2% 0 2%;
+  font-size: 0.8em;
+  border-radius: 5px;
+  box-shadow: 0px 5px 2px #89968f;
+  position: relative;
+  top: 0px;
+  transition: all ease 0.1s;
 }
-
-@keyframes removeTile{
-    0%{
-        transform: 
-        /* translate3d(var(--tx), var(--ty), 0) */
-        rotateX(0deg);
-        /* scale(1); */
-        perspective: none;
-       
-    }
-    50%{
-        perspective: 200px;
-        transform:rotateX(20deg);
-    }
-    100%{
-        transform:
-        translate3d(var(--tx), var(--ty), 0)
-        /* translate3d(var(--tx), var(--ty), 0) */
-        scale(var(--scale))
-        rotateX(var(--deg))
-        perspective(var(--persp));
-        visibility: hidden;
-    }
-}
-
-footer{
-    display:flex;
-    justify-content: flex-end;
-    padding: 1% 2% 1% 2%;
-    align-items: center;
-    position: relative;
-    bottom:0;
-    width:100%;
-    /* border:1px solid red; */
-    font-size:1.5em;
-    top:55%;
-}
-footer button{
-    font-family: 'News Cycle', sans-serif;
-    text-transform: uppercase;
-    padding:0.5%;
-    width:10%;
-    min-width: 100px;
-    background-color:#b6aeae;
-    color:rgb(22, 22, 22);
-    margin: 0 2% 0 2%;
-    font-size:0.8em;
-    border-radius: 5px;
-    box-shadow: 0px 5px 2px #89968f;
-    position: relative;
-    top: 0px;
-    transition: all ease 0.1s;
-}
-footer button:active{
-    box-shadow: 0 3px 0 #89968f;
+footer button:active {
+  box-shadow: 0 3px 0 #89968f;
   top: 3px;
 }
 
-@media only screen and (max-width: 725px) {
-    #tile-row{
-        width:350px;
-        height:50px;
-        padding:0 3% 0 4%;        
-    }
-    
-    .tile{
-        height: 50px;
-        width: 50px;
-        line-height: 1em;
-        box-shadow: 0px 20px 50px #555;
-        transform: rotateX(50deg) scale(0.85);
-        perspective: 800px;
-    }
-    body{
-    }
-    #answer-row{
-        width:350px;
-        height: 50px;
-    }
-    #answer-row .tile{
-        height: 50px;
-        width: 50px;
-        line-height: 1.5em;
-        font-size: 2em;
-    }
-    #answer-row .tile-value{
-        font-size:0.4em;
-        text-align: center;
-        padding-left: 0;
-        transform: translateX(0.8em) translateY(1.5em);
-
-    }
-    .tile-value{
-        display:inline-block;
-        font-size:0.5em;
-        transform: translateX(0.3em) translateY(.9em);
-    }
-    footer{
-        top:70%;
-    }
-  }
-
-/*  
-:root{
-    --tx:0px; 
-    --ty:0px; 
-    --txs:0px;
-    --tys:0px;   
-    --scale:0.7;
-    --deg: 60deg;
-    --persp: 200px;
+.info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  line-height: 15em;
+  font-size: 2em;
+  animation: fade 2s linear forwards;
 }
 
-*/
+@media only screen and (max-width: 725px) {
+  #tile-row {
+    width: 350px;
+    height: 50px;
+    padding: 0 3% 0 4%;
+  }
+
+  .tile {
+    height: 50px;
+    width: 50px;
+    line-height: 1em;
+    box-shadow: 0px 20px 50px #555;
+    transform: rotateX(50deg) scale(0.85);
+    perspective: 800px;
+  }
+  body {
+  }
+  #answer-row {
+    width: 350px;
+    height: 50px;
+  }
+  #answer-row .tile {
+    height: 50px;
+    width: 50px;
+    line-height: 1.5em;
+    font-size: 2em;
+  }
+  #answer-row .tile-value {
+    font-size: 0.4em;
+    text-align: center;
+    padding-left: 0;
+    transform: translateX(0.8em) translateY(1.5em);
+  }
+  .tile-value {
+    display: inline-block;
+    font-size: 0.5em;
+    transform: translateX(0.3em) translateY(0.9em);
+  }
+  footer {
+    top: 70%;
+  }
+  .info {
+    font-size: 1em;
+    line-height: 25em;
+  }
+}
