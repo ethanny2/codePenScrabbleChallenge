@@ -67,6 +67,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 body,
@@ -147,7 +148,7 @@ header #timer-num {
   font-size: 2.5em;
   line-height: 2.5em;
   /* transition: 0.5s all ease; */
-  transition: 0.5s transform ease;\
+  transition: 0.5s transform ease;
   box-shadow: 0px 20px 50px #555;
   cursor: pointer;
   transform: rotateX(0deg);
@@ -197,6 +198,7 @@ header #timer-num {
   perspective: 200px;
   cursor: pointer;
   max-width: 100px;
+  z-index: 1;
 }
 .tile-value {
   display: inline-block;
@@ -210,10 +212,12 @@ header #timer-num {
 
 .setTileAnim {
   animation: setTile 0.5s ease-in-out;
+  z-index:3;
 }
 
 .removeTileAnim {
   animation: removeTile 0.5s ease-in-out forwards;
+  z-index:3;
 }
 
 footer {
@@ -225,7 +229,7 @@ footer {
   bottom: 0;
   width: 100%;
   font-size: 1.5em;
-  top: 55%;
+  top: 50%;
 }
 footer button {
   font-family: 'News Cycle', sans-serif;
@@ -302,10 +306,11 @@ footer button:active {
     transform: translateX(0.3em) translateY(0.9em);
   }
   footer {
-    top: 70%;
+    top: 55%;
   }
   .info {
     font-size: 1em;
     line-height: 25em;
   }
 }
+

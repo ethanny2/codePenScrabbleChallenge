@@ -159,9 +159,8 @@ function removeLetter(tile) {
   animation.style.top = startRect[1] + 'px';
   tile.remove();
   computeVector(startRect, endRect);
-  document.body.appendChild(animation);
-
   animation.classList.add('removeTileAnim');
+  document.body.appendChild(animation);
   setTimeout(() => {
     orignalTile.classList.toggle('tileHidden');
     document.body.removeChild(animation);
