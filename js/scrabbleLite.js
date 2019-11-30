@@ -41,11 +41,14 @@ function displayScoreEffect(points) {
 function addToScore(wordValue) {
   let score = document.getElementById('score');
   let newScore = parseInt(score.innerText, 10) + wordValue;
-  score.innerText = newScore;
-  generateTiles();
+  if(!isNaN(newScore)){
+    score.innerText = newScore;
+    generateTiles();
+  }
 }
 
 function getWordValue() {
+  let score = document.getElementById('score');
   let answerLetterArr = Array.from(
     document.getElementById('answer-row').children
   );
@@ -55,8 +58,12 @@ function getWordValue() {
     total += parseInt(val.firstElementChild.innerText, 10);
     word += val.innerText.charAt(0);
   });
-  addToScore(total);
-  displayScoreEffect(total);
+
+  let newScore = parseInt(score.innerText, 10) + total;
+  if(!isNaN(newScore)){
+    addToScore(total);
+    displayScoreEffect(total);
+  }
   return [word, total];
 }
 
@@ -130,8 +137,9 @@ function insertLetter(tile) {
   let endRect = findAbsPos(inserted);
   computeVector(startRect, endRect);
   tile.classList.toggle('tileHidden');
-  animation.classList.add('setTileAnim');
   document.body.appendChild(animation);
+
+  animation.classList.add('setTileAnim');
   /* Wait for the animation to finsh*/
   setTimeout(() => {
     inserted.classList.toggle('tileHidden');
@@ -151,8 +159,9 @@ function removeLetter(tile) {
   animation.style.top = startRect[1] + 'px';
   tile.remove();
   computeVector(startRect, endRect);
-  animation.classList.add('removeTileAnim');
   document.body.appendChild(animation);
+
+  animation.classList.add('removeTileAnim');
   setTimeout(() => {
     orignalTile.classList.toggle('tileHidden');
     document.body.removeChild(animation);
