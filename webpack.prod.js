@@ -58,17 +58,17 @@ module.exports = merge(common, {
         }
       },
       // Loads all JSON and text files; add more based on your needs
-      {
-        test: /\.(txt|JSON)$/i,
-        use: {
-          loader: "file-loader",
-          options: {
-            outputPath: "data/",
-            name: "[name].[ext]",
-            esModule: false
-          }
-        }
-      },
+      // {
+      //   test: /\.(txt|JSON)$/i,
+      //   use: {
+      //     loader: "file-loader",
+      //     options: {
+      //       outputPath: "data/",
+      //       name: "[name].[ext]",
+      //       esModule: false
+      //     }
+      //   }
+      // },
       // loads all html files
       {
         test: /\.(html)$/,

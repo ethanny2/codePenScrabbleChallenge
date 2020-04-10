@@ -5,14 +5,15 @@
 import "../sass/style.scss";
 import "../static/html/index.html";
 
+import allWords from "../static/data/words_dictionary.json";
+// var fs2 = require("file-system");
 /*
  Distributon of tiles found here
  https://www.thesprucecrafts.com/how-many-letter-tiles-are-in-scrabble-410933
  Since my version doesn't use blank tiles I just omit them (So its out of 98 tiles)
  Added extra U and S added 2 extra Es
 */
-const DICTIONARY = [];
-const fs = require("fs");
+const DICTIONARY_KEYS = Object.keys(allWords);
 const tileFrequencies =
   "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 let playTiles; //Array of tiles
@@ -25,8 +26,43 @@ tileValueMap.set("5", ["K"]);
 tileValueMap.set("8", ["J", "X"]);
 tileValueMap.set("10", ["Q", "Z"]);
 
+createDictionary();
+
 function createDictionary() {
-  //fs.readFile(')
+  console.log(Object.keys(allWords).length);
+  validateWordLinear("peace");
+  validateWordBinary("peace");
+}
+
+/* Will look for the word through the */
+function validateWordLinear(word) {
+  console.time("linear");
+  let found = DICTIONARY_KEYS.find(e => e.toLowerCase() === word.toLowerCase());
+  console.log(found);
+  console.timeEnd("linear");
+}
+
+function validateWordBinary(word) {
+  console.time("binary");
+  let start = 0;
+  let targetWord = word.toLowerCase();
+  let end = DICTIONARY_KEYS.length - 1;
+  let mid = Math.floor((start + end) / 2);
+  let found;
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+    console.log(DICTIONARY_KEYS[mid]);
+    if (DICTIONARY_KEYS[mid].toLowerCase() === targetWord) {
+      found = DICTIONARY_KEYS[mid];
+      break;
+    } else if (DICTIONARY_KEYS[mid].toLowerCase() < targetWord) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+  }
+  console.log(found);
+  console.timeEnd("binary");
 }
 
 function getLetterValue(letter) {
