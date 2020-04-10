@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(common, {
   mode: "development",
+  target: "node",
   devtool: "inline-source-map",
   output: {
     filename: "js/[name].bundle.js",
@@ -51,13 +52,13 @@ module.exports = merge(common, {
           }
         }
       },
-      // Loads all 3D model files; add more based on your needs
+      // Loads all JSON and text files; add more based on your needs
       {
-        test: /\.(obj|gltf|drc|mtl|glb)$/i,
+        test: /\.(txt|JSON)$/i,
         use: {
           loader: "file-loader",
           options: {
-            outputPath: "models/",
+            outputPath: "data/",
             name: "[name].[ext]",
             esModule: false
           }

@@ -11,6 +11,8 @@ import "../static/html/index.html";
  Since my version doesn't use blank tiles I just omit them (So its out of 98 tiles)
  Added extra U and S added 2 extra Es
 */
+const DICTIONARY = [];
+const fs = require("fs");
 const tileFrequencies =
   "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 let playTiles; //Array of tiles
@@ -22,6 +24,10 @@ tileValueMap.set("4", ["F", "H", "V", "W", "Y"]);
 tileValueMap.set("5", ["K"]);
 tileValueMap.set("8", ["J", "X"]);
 tileValueMap.set("10", ["Q", "Z"]);
+
+function createDictionary() {
+  //fs.readFile(')
+}
 
 function getLetterValue(letter) {
   for (const [key, val] of tileValueMap) {

@@ -57,14 +57,14 @@ module.exports = merge(common, {
           }
         }
       },
-      // Loads all 3D model files; add more based on your needs
+      // Loads all JSON and text files; add more based on your needs
       {
-        test: /\.(obj|gltf|drc|mtl|glb)$/i,
+        test: /\.(txt|JSON)$/i,
         use: {
           loader: "file-loader",
           options: {
-            outputPath: "models/",
-            name: "[name].[contenthash].[ext]",
+            outputPath: "data/",
+            name: "[name].[ext]",
             esModule: false
           }
         }
