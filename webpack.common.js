@@ -9,6 +9,9 @@ const entry = path.resolve(__dirname, "./src/js/index.js");
 const nodePath = path.resolve(__dirname, "./node_modules");
 
 module.exports = {
+  node: {
+    fs: 'empty',
+  },
   stats: {
     chunks: true,
     colors: true,
@@ -37,7 +40,8 @@ module.exports = {
             options: {
               cacheDirectory: true,
               presets: ["@babel/preset-env"],
-              cacheCompression: true
+              cacheCompression: true,
+              sourceType: "unambiguous"
             }
           },
           // Lint javascript before transpiling
