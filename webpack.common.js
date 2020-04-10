@@ -14,8 +14,8 @@ module.exports = {
     colors: true,
     env: true
   },
-  performance: { 
-    hints: false 
+  performance: {
+    hints: false
   },
   entry: {
     main: entry
@@ -102,13 +102,7 @@ module.exports = {
     //Adds defer to js scripts to speed load times.
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: "defer"
-    }),
-    new CopyPlugin([
-      {
-        from: path.resolve(__dirname, "./src/js/vendor/draco"),
-        to: "js/vendor/draco"
-      }
-    ])
+    })
   ],
   optimization: {
     runtimeChunk: "single",
