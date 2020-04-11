@@ -4,7 +4,10 @@
 */
 import "../sass/style.scss";
 import "../static/html/index.html";
-
+/* 
+   Automatically parsed into JavaScript object by webpack 4
+   with no external loaders needed! 
+*/
 import allWords from "../static/data/words_dictionary.json";
 // var fs2 = require("file-system");
 /*
@@ -13,7 +16,7 @@ import allWords from "../static/data/words_dictionary.json";
  Since my version doesn't use blank tiles I just omit them (So its out of 98 tiles)
  Added extra U and S added 2 extra Es
 */
-const DICTIONARY_KEYS = Object.keys(allWords);
+const WORDS = Object.keys(allWords);
 const tileFrequencies =
   "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 let playTiles; //Array of tiles
@@ -29,40 +32,43 @@ tileValueMap.set("10", ["Q", "Z"]);
 createDictionary();
 
 function createDictionary() {
-  console.log(Object.keys(allWords).length);
-  validateWordLinear("peace");
-  validateWordBinary("peace");
+  console.clear();
+  console.log(`Array size: ${WORDS.length}`);
+  // validateWordLinear("house");
+  // validateWordBinary("house");
 }
 
-/* Will look for the word through the */
+validateWordLinear("house");
+validateWordBinary("house");
+
 function validateWordLinear(word) {
-  console.time("linear");
-  let found = DICTIONARY_KEYS.find(e => e.toLowerCase() === word.toLowerCase());
-  console.log(found);
-  console.timeEnd("linear");
+  let targetWord = word.toLowerCase();
+  console.log(`Starting linear search... for word: ${targetWord}`);
+  console.time("Linear Search Time");
+  let found = WORDS.find(e => e.toLowerCase() === targetWord);
+  console.timeEnd("Linear Search Time");
 }
 
 function validateWordBinary(word) {
-  console.time("binary");
-  let start = 0;
   let targetWord = word.toLowerCase();
-  let end = DICTIONARY_KEYS.length - 1;
+  console.log(`Starting binary search... for word: ${targetWord}`);
+  console.time("Binary Search Time");
+  let start = 0;
+  let end = WORDS.length - 1;
   let mid = Math.floor((start + end) / 2);
   let found;
   while (start <= end) {
     mid = Math.floor((start + end) / 2);
-    console.log(DICTIONARY_KEYS[mid]);
-    if (DICTIONARY_KEYS[mid].toLowerCase() === targetWord) {
-      found = DICTIONARY_KEYS[mid];
+    if (WORDS[mid].toLowerCase() === targetWord) {
+      found = WORDS[mid];
       break;
-    } else if (DICTIONARY_KEYS[mid].toLowerCase() < targetWord) {
+    } else if (WORDS[mid].toLowerCase() < targetWord) {
       start = mid + 1;
     } else {
       end = mid - 1;
     }
   }
-  console.log(found);
-  console.timeEnd("binary");
+  console.timeEnd("Binary Search Time");
 }
 
 function getLetterValue(letter) {
