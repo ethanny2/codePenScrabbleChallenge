@@ -1,21 +1,14 @@
-/* 
-  Adding your style files and html files to webpacks dependency graph so it can be
-  parsed by loaders 
-*/
 import "../sass/style.scss";
 import "../static/html/index.html";
-/* 
-   Automatically parsed into JavaScript object by webpack 4
-   with no external loaders needed! 
-*/
 import allWords from "../static/data/words_dictionary.json";
-// var fs2 = require("file-system");
+
 /*
  Distributon of tiles found here
  https://www.thesprucecrafts.com/how-many-letter-tiles-are-in-scrabble-410933
  Since my version doesn't use blank tiles I just omit them (So its out of 98 tiles)
  Added extra U and S added 2 extra Es
 */
+const KEY = "WORDS";
 const WORDS = Object.keys(allWords);
 const tileFrequencies =
   "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
@@ -32,44 +25,31 @@ tileValueMap.set("10", ["Q", "Z"]);
 createDictionary();
 
 function createDictionary() {
-  console.clear();
-  console.log(`Array size: ${WORDS.length}`);
-  // validateWordLinear("house");
-  // validateWordBinary("house");
-}
-
-validateWordLinear("house");
-validateWordBinary("house");
-
-function validateWordLinear(word) {
-  let targetWord = word.toLowerCase();
-  console.log(`Starting linear search... for word: ${targetWord}`);
-  console.time("Linear Search Time");
-  let found = WORDS.find(e => e.toLowerCase() === targetWord);
-  console.timeEnd("Linear Search Time");
-}
-
-function validateWordBinary(word) {
-  let targetWord = word.toLowerCase();
-  console.log(`Starting binary search... for word: ${targetWord}`);
-  console.time("Binary Search Time");
-  let start = 0;
-  let end = WORDS.length - 1;
-  let mid = Math.floor((start + end) / 2);
-  let found;
-  while (start <= end) {
-    mid = Math.floor((start + end) / 2);
-    if (WORDS[mid].toLowerCase() === targetWord) {
-      found = WORDS[mid];
-      break;
-    } else if (WORDS[mid].toLowerCase() < targetWord) {
-      start = mid + 1;
-    } else {
-      end = mid - 1;
-    }
+  if (!localStorage.getItem(KEY)) {
+    import("../static/data/words_dictionary.json")
+      .then(module => module.default)
+      .then(data => {
+        console.log(Object.keys(data).length);
+      });
   }
-  console.timeEnd("Binary Search Time");
 }
+// function validateWordBinary(word) {
+//   let targetWord = word.toLowerCase();
+//   let start = 0;
+//   let end = WORDS.length - 1;
+//   let mid = Math.floor((start + end) / 2);
+//   while (start <= end) {
+//     mid = Math.floor((start + end) / 2);
+//     if (WORDS[mid].toLowerCase() === targetWord) {
+//       return true;
+//     } else if (WORDS[mid].toLowerCase() < targetWord) {
+//       start = mid + 1;
+//     } else {
+//       end = mid - 1;
+//     }
+//   }
+//   return false;
+// }
 
 function getLetterValue(letter) {
   for (const [key, val] of tileValueMap) {
