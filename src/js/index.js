@@ -9,7 +9,7 @@ import allWords from "../static/data/words_dictionary.json";
  Added extra U and S added 2 extra Es
 */
 const KEY = "WORDS";
-const WORDS = Object.keys(allWords);
+const WORDS ;
 const tileFrequencies =
   "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 let playTiles; //Array of tiles
@@ -24,14 +24,27 @@ tileValueMap.set("10", ["Q", "Z"]);
 
 createDictionary();
 
+/*
+  words_dictionary.json ~ 400,000 key-values
+  Instead of loading a 7MB JSON & converting to an Array each time
+  we store the parsed array in the client side
+  localStorage and we conditionally import the JSON
+  data at RUNTIME using ES2020 dynamic import() if its not
+  found!
+  https://v8.dev/features/dynamic-import
+*/
 function createDictionary() {
+  const WORDS;
   if (!localStorage.getItem(KEY)) {
     import("../static/data/words_dictionary.json")
       .then(module => module.default)
       .then(data => {
-        console.log(Object.keys(data).length);
+        WORDS = Object.keys(data);
+        localStorage.setItem(KEY,JSON.stringify(WORDS));
       });
   }
+            WORDS = JSON.stringify(localStorage.getItem(KEY));
+    return WORDS;
 }
 // function validateWordBinary(word) {
 //   let targetWord = word.toLowerCase();
