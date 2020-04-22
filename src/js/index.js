@@ -50,14 +50,18 @@ function createDictionary() {
 function validateWordBinary(word) {
   console.log("Calling validateWordBinary " + word);
   let targetWord = word.toLowerCase();
+  console.log("TESTING WITH FIND " + WORDS.find(e => e === targetWord));
   let start = 0;
   let end = WORDS.length - 1;
-  let mid = Math.floor((start + end) / 2);
+  let mid;
   while (start <= end) {
-    mid = Math.floor((start + end) / 2);
-    if (WORDS[mid].toLowerCase() === targetWord) {
+    mid = parseInt((start + end) / 2, 10);
+    let curWord = WORDS[mid];
+    console.log(curWord);
+    console.log(`Start: ${start}   END: ${end}   MID: ${mid}`);
+    if (curWord === targetWord) {
       return true;
-    } else if (WORDS[mid].toLowerCase() < targetWord) {
+    } else if (curWord < targetWord) {
       start = mid + 1;
     } else {
       end = mid - 1;
