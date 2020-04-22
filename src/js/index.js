@@ -1,7 +1,5 @@
 import "../sass/style.scss";
 import "../static/html/index.html";
-import allWords from "../static/data/words_dictionary.json";
-
 /*
  Distributon of tiles found here
  https://www.thesprucecrafts.com/how-many-letter-tiles-are-in-scrabble-410933
@@ -9,7 +7,7 @@ import allWords from "../static/data/words_dictionary.json";
  Added extra U and S added 2 extra Es
 */
 const KEY = "WORDS";
-const WORDS ;
+const WORDS = createDictionary();
 const tileFrequencies =
   "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 let playTiles; //Array of tiles
@@ -25,44 +23,48 @@ tileValueMap.set("10", ["Q", "Z"]);
 createDictionary();
 
 /*
+  DYNAMIC IMPORTS WITH import()!
+  ------------------------------
   words_dictionary.json ~ 400,000 key-values
   Instead of loading a 7MB JSON & converting to an Array each time
   we store the parsed array in the client side
   localStorage and we conditionally import the JSON
   data at RUNTIME using ES2020 dynamic import() if its not
   found!
-  https://v8.dev/features/dynamic-import
 */
 function createDictionary() {
-  const WORDS;
+  let ret = [];
   if (!localStorage.getItem(KEY)) {
-    import("../static/data/words_dictionary.json")
+    let wordData = import("../static/data/words_dictionary.json")
       .then(module => module.default)
       .then(data => {
-        WORDS = Object.keys(data);
-        localStorage.setItem(KEY,JSON.stringify(WORDS));
+        ret = Object.keys(data);
+        localStorage.setItem(KEY, JSON.stringify(ret));
+        return ret;
       });
   }
-            WORDS = JSON.stringify(localStorage.getItem(KEY));
-    return WORDS;
+  ret = JSON.parse(localStorage.getItem(KEY));
+  return ret;
 }
-// function validateWordBinary(word) {
-//   let targetWord = word.toLowerCase();
-//   let start = 0;
-//   let end = WORDS.length - 1;
-//   let mid = Math.floor((start + end) / 2);
-//   while (start <= end) {
-//     mid = Math.floor((start + end) / 2);
-//     if (WORDS[mid].toLowerCase() === targetWord) {
-//       return true;
-//     } else if (WORDS[mid].toLowerCase() < targetWord) {
-//       start = mid + 1;
-//     } else {
-//       end = mid - 1;
-//     }
-//   }
-//   return false;
-// }
+
+function validateWordBinary(word) {
+  console.log("Calling validateWordBinary " + word);
+  let targetWord = word.toLowerCase();
+  let start = 0;
+  let end = WORDS.length - 1;
+  let mid = Math.floor((start + end) / 2);
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+    if (WORDS[mid].toLowerCase() === targetWord) {
+      return true;
+    } else if (WORDS[mid].toLowerCase() < targetWord) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+  }
+  return false;
+}
 
 function getLetterValue(letter) {
   for (const [key, val] of tileValueMap) {
@@ -76,9 +78,7 @@ function displayScoreEffect(points) {
   console.log("Displaying score effect");
   let anim = document.getElementById("score-animation");
   anim.innerText = "";
-  if (!anim.classList.contains("scoredClass")) {
-    anim.classList.add("scoredClass");
-  }
+  anim.classList.toggle("scoredClass", true);
   //Clone to replay animation
   let newNode = anim.cloneNode(true);
   newNode.innerText = `Nice +${points}!`;
@@ -97,20 +97,24 @@ function addToScore(wordValue) {
 
 function getWordValue() {
   let score = document.getElementById("score");
-  let answerLetterArr = Array.from(
-    document.getElementById("answer-row").children
-  );
+  let answerRow = document.getElementById("answer-row");
+  let answerLetterArr = Array.from(answerRow.children);
   let total = 0;
   let word = "";
   answerLetterArr.forEach(val => {
     total += parseInt(val.firstElementChild.innerText, 10);
     word += val.innerText.charAt(0);
   });
-
   let newScore = parseInt(score.innerText, 10) + total;
-  if (!isNaN(newScore)) {
+  if (!isNaN(newScore) && validateWordBinary(word)) {
     addToScore(total);
     displayScoreEffect(total);
+  } else {
+    answerRow.classList.toggle("wrong", true);
+    console.log("Adding shake aniamtion");
+    setTimeout(() => {
+      answerRow.classList.toggle("wrong");
+    }, 800);
   }
   return [word, total];
 }
