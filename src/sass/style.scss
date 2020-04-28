@@ -176,8 +176,8 @@ header #timer-num {
   cursor: pointer;
   transform: rotateX(0deg);
 }
-#answer-row.wrong{
-	animation:shake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+#answer-row.wrong {
+  animation: shake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97);
 }
 #answer-row .tile-value {
   display: inline-block;
@@ -256,8 +256,8 @@ footer {
   width: 100%;
   font-size: 1.5em;
   top: 50%;
-  #theme-label{
-    margin-right:auto;    
+  #theme-label {
+    margin-right: auto;
   }
 }
 
@@ -312,8 +312,6 @@ footer button:active {
     transform: rotateX(50deg) scale(0.85);
     perspective: 800px;
   }
-  body {
-  }
   #answer-row {
     width: 350px;
     height: 50px;
@@ -344,5 +342,46 @@ footer button:active {
   }
   footer button {
     font-size: 0.5em;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  #tile-row {
+    width: 315px;
+    height: 50px;
+    padding: 0 3% 0 4%;
+    padding: 0 1% 0 1%;
+  }
+
+  .tile {
+    height: 50px;
+    width: 45px;
+    line-height: 1em;
+    box-shadow: 0px 20px 50px #555;
+    transform: rotateX(50deg) scale(0.85);
+    perspective: 800px;
+  }
+  #answer-row .tile {
+    height: 50px;
+    width: 45px;
+  }
+  #answer-row {
+    width: 315px;
+    height: 50px;
+  }
+
+  footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+    #theme-label {
+      font-size: 1.2rem;
+      margin: 0;
+      order: 1;
+      margin-top: 1rem;
+    }
+    button {
+      margin: 0 1rem;
+    }
   }
 }
