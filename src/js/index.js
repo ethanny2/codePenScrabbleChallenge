@@ -248,28 +248,26 @@ function findAbsPos(obj) {
   return [curleft, curtop];
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  document.querySelector("#tile-row").addEventListener("click", event => {
-    if (event.target && event.target.classList.contains("tile")) {
-      insertLetter(event.target);
-    }
-  });
-  document.getElementById("refresh").addEventListener("click", () => {
-    generateTiles();
-  });
-  document.getElementById("submit").addEventListener("click", () => {
-    getWordValue();
-  });
-  document.addEventListener("keypress", event => {
-    if (event.keyCode == 13) {
-      getWordValue();
-    }
-  });
-
-  document.querySelector("#answer-row").addEventListener("click", event => {
-    if (event.target && event.target.classList.contains("tile")) {
-      removeLetter(event.target);
-    }
-  });
-  gameLoop();
+document.querySelector("#theme").addEventListener("change", e => {
+  document.body.style.background = e.target.value;
 });
+
+document.querySelector("#tile-row").addEventListener("click", event => {
+  if (event.target && event.target.classList.contains("tile")) {
+    insertLetter(event.target);
+  }
+});
+document.getElementById("refresh").addEventListener("click", generateTiles);
+document.getElementById("submit").addEventListener("click", getWordValue);
+document.addEventListener("keypress", event => {
+  if (event.keyCode == 13) {
+    getWordValue();
+  }
+});
+
+document.querySelector("#answer-row").addEventListener("click", event => {
+  if (event.target && event.target.classList.contains("tile")) {
+    removeLetter(event.target);
+  }
+});
+gameLoop();

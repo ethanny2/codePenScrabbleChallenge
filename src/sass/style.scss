@@ -101,7 +101,8 @@ html {
 }
 
 body {
-  background-color: #dda7ab;
+  background: #dda7ab;
+  transition: background 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 header {
   position: absolute;
@@ -255,7 +256,11 @@ footer {
   width: 100%;
   font-size: 1.5em;
   top: 50%;
+  #theme-label{
+    margin-right:auto;    
+  }
 }
+
 footer button {
   font-family: "News Cycle", sans-serif;
   text-transform: uppercase;
