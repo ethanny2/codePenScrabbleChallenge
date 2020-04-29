@@ -59,13 +59,35 @@
   }
 }
 
-@keyframes scoreAnimation {
+@keyframes scoreAnimationLow {
   from {
     opacity: 1;
   }
   to {
     opacity: 0;
     transform: translateY(-400px);
+  }
+}
+
+
+@keyframes scoreAnimationMid {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-400px)  scale(3);
+  }
+}
+
+@keyframes scoreAnimationHigh {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-400px) scale(5) rotate(360deg);
+    text-transform: uppercase;
   }
 }
 
@@ -138,8 +160,16 @@ header #timer-num {
   font-size: 1.5em;
   opacity: 0;
 }
-.scoredClass {
-  animation: scoreAnimation 2s linear;
+.lowScore {
+  animation: scoreAnimationLow 2s linear;
+  animation-iteration-count: 1;
+}
+.midScore {
+  animation: scoreAnimationMid 2s linear;
+  animation-iteration-count: 1;
+}
+.highScore {
+  animation: scoreAnimationHigh 3s linear;
   animation-iteration-count: 1;
 }
 

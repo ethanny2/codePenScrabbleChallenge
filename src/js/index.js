@@ -80,14 +80,27 @@ function getLetterValue(letter) {
 
 function displayScoreEffect(points) {
   console.log("Displaying score effect");
-  let anim = document.getElementById("score-animation");
-  anim.innerText = "";
-  anim.classList.toggle("scoredClass", true);
-  //Clone to replay animation
-  let newNode = anim.cloneNode(true);
-  newNode.innerText = `Nice +${points}!`;
-  anim.remove();
-  document.body.append(newNode);
+  const anim = document.getElementById("score-animation");
+  const converted = Number(points);
+  if (converted > 0 && converted <= 3) {
+    anim.innerText = "Nice! +" + converted;
+    anim.classList.toggle("lowScore", true);
+    setTimeout(() => {
+      anim.classList.toggle("lowScore");
+    }, 500);
+  } else if (converted > 3 && converted <= 5) {
+    anim.innerText = "Wonderful! +" + converted;
+    anim.classList.toggle("midScore", true);
+    setTimeout(() => {
+      anim.classList.toggle("midScore");
+    }, 500);
+  } else if (converted > 5 && converted <= 8) {
+    anim.innerText = "Amazing!!! +" + converted;
+    anim.classList.toggle("highScore", true);
+    setTimeout(() => {
+      anim.classList.toggle("highScore");
+    }, 500);
+  }
 }
 
 function addToScore(wordValue) {
