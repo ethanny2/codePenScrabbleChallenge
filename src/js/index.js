@@ -94,7 +94,7 @@ function displayScoreEffect(points) {
     setTimeout(() => {
       anim.classList.toggle("midScore");
     }, 500);
-  } else if (converted > 5 && converted <= 8) {
+  } else if (converted > 5) {
     anim.innerText = "Amazing!!! +" + converted;
     anim.classList.toggle("highScore", true);
     setTimeout(() => {
@@ -123,7 +123,9 @@ function getWordValue() {
     word += val.innerText.charAt(0);
   });
   let newScore = parseInt(score.innerText, 10) + total;
-  if (!isNaN(newScore) && validateWordBinary(word)) {
+  let found = WORDS.find(e => e === word.toLowerCase());
+  console.log(found);
+  if (!isNaN(newScore) && found) {
     addToScore(total);
     displayScoreEffect(total);
   } else {
@@ -189,7 +191,7 @@ function updateTimer(time, id) {
 
 function gameLoop() {
   generateTiles();
-  startTimer(120);
+  startTimer(123);
 }
 
 /* When tile clicked play animation that adds it to the answer grid */

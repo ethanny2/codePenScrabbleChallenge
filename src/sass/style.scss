@@ -12,12 +12,13 @@
   0% {
     opacity: 1;
   }
-  90% {
-    z-index: 1;
-  }
+
   100% {
-    opacity: 0;
+    background-color: transparent;
     z-index: -1;
+
+    opacity: 0;
+    display: none;
   }
 }
 //https://css-tricks.com/snippets/css/shake-css-keyframe-animation/
@@ -69,14 +70,13 @@
   }
 }
 
-
 @keyframes scoreAnimationMid {
   from {
     opacity: 1;
   }
   to {
     opacity: 0;
-    transform: translateY(-400px)  scale(3);
+    transform: translateY(-400px) scale(3);
   }
 }
 
@@ -119,7 +119,7 @@ body,
 html {
   width: 100%;
   height: 100%;
-  font-family: "News Cycle", sans-serif;
+  font-family: Bookman, Geneva, Tahoma, sans-serif;
 }
 
 body {
@@ -196,7 +196,8 @@ header #timer-num {
   background-image: url("https://i.pinimg.com/originals/34/7b/05/347b05f70e3ec739230bb470bdda89d7.jpg");
   width: 100px;
   text-align: center;
-  font-family: "News Cycle", sans-serif;
+  font-family: Bookman, Geneva, Tahoma, sans-serif;
+
   font-weight: 700;
   font-size: 2.5em;
   line-height: 2.5em;
@@ -243,7 +244,8 @@ header #timer-num {
   background-image: url("https://i.pinimg.com/originals/34/7b/05/347b05f70e3ec739230bb470bdda89d7.jpg");
   width: 100px;
   text-align: center;
-  font-family: "News Cycle", sans-serif;
+  font-family: Bookman, Geneva, Tahoma, sans-serif;
+
   font-weight: 700;
   font-size: 2.5em;
   line-height: 2.5em;
@@ -292,7 +294,8 @@ footer {
 }
 
 footer button {
-  font-family: "News Cycle", sans-serif;
+  font-family: Bookman, Geneva, Tahoma, sans-serif;
+
   text-transform: uppercase;
   padding: 0.5%;
   width: 10%;
@@ -312,26 +315,73 @@ footer button:active {
   top: 3px;
 }
 
-.info {
+.loading {
   position: absolute;
-  top: 0;
-  left: 0;
   background-color: black;
   width: 100%;
   height: 100%;
   z-index: 2;
   text-align: center;
   color: white;
-  line-height: 15em;
   font-size: 2em;
-  animation: fade 2s linear forwards;
+  animation: fade 0.7s ease-out forwards;
+  animation-delay: 3s;
+  &-content {
+    height:100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  &-title {
+    margin: 3rem 0;
+    font-size: 2rem;
+  }
 }
 
-@media only screen and (max-width: 725px) {
+/* Loading Animation from https://loading.io/css/ */
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+  margin-right: 1rem;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 8rem;
+  height: 8rem;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 525px) {
   #tile-row {
     width: 350px;
     height: 50px;
-    padding: 0 3% 0 4%;
   }
 
   .tile {
@@ -379,13 +429,13 @@ footer button:active {
   #tile-row {
     width: 315px;
     height: 50px;
-    padding: 0 3% 0 4%;
     padding: 0 1% 0 1%;
   }
 
   .tile {
+    font-size: 2.2rem;
     height: 50px;
-    width: 45px;
+    width: 50px;
     line-height: 1em;
     box-shadow: 0px 20px 50px #555;
     transform: rotateX(50deg) scale(0.85);
@@ -393,7 +443,7 @@ footer button:active {
   }
   #answer-row .tile {
     height: 50px;
-    width: 45px;
+    width: 50px;
   }
   #answer-row {
     width: 315px;

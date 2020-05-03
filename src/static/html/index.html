@@ -10,9 +10,17 @@
     />
   </head>
   <body>
-    <h1 class="info">
-      Click to place tile | Click to remove tile | Words not validated
-    </h1>
+    <div class="loading">
+      <div class="loading-content">
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <h2 class="loading-title">Loading...</h2>
+      </div>
+    </div>
     <h2 id="score-animation"></h2>
     <header>
       <h1 id="timer"><span id="timer-num">0 </span>Seconds</h1>
