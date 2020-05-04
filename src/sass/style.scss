@@ -153,7 +153,8 @@ header #timer-num {
 }
 #score-animation {
   top: 20%;
-  left: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   position: absolute;
   color: #ffffff;
   text-transform: capitalize;
@@ -338,6 +339,15 @@ footer button:active {
   &-title {
     margin: 3rem 0;
     font-size: 2rem;
+  }
+  &-instructions{
+    font-size: 1.1rem;
+    list-style: circle;
+    color:white;
+    li{
+      text-align: left;
+      margin:0.4rem 2rem;
+    }
   }
 }
 

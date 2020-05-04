@@ -274,11 +274,41 @@ document.querySelector("#tile-row").addEventListener("click", event => {
 });
 document.getElementById("refresh").addEventListener("click", generateTiles);
 document.getElementById("submit").addEventListener("click", getWordValue);
+/*Enter key submits word */
 document.addEventListener("keypress", event => {
   if (event.keyCode == 13) {
     getWordValue();
   }
 });
+/*
+  For mobile users let them double tap to submit instead
+  http://jsfiddle.net/brettwp/J4djY/
+*/
+if (
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
+) {
+  document.body.addEventListener("touchend", detectDoubleTapClosure());
+}
+
+function detectDoubleTapClosure() {
+  let lastTap = 0;
+  let timeout;
+  return function detectDoubleTap(event) {
+    const curTime = new Date().getTime();
+    const tapLen = curTime - lastTap;
+    if (tapLen < 500 && tapLen > 0) {
+      getWordValue();
+      event.preventDefault();
+    } else {
+      timeout = setTimeout(() => {
+        clearTimeout(timeout);
+      }, 500);
+    }
+    lastTap = curTime;
+  };
+}
 
 document.querySelector("#answer-row").addEventListener("click", event => {
   if (event.target && event.target.classList.contains("tile")) {
