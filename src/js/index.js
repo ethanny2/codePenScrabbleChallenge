@@ -129,6 +129,7 @@ function getWordValue() {
     word += val.innerText.charAt(0);
   });
   let newScore = parseInt(score.innerText, 10) + total;
+  console.log(word);
   let found = WORDS.find(e => e === word.toLowerCase());
   console.log(found);
   if (!isNaN(newScore) && found) {

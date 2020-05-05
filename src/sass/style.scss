@@ -187,7 +187,7 @@ header #timer-num {
   margin: 0 auto;
   height: 100px;
   background-color: #f1e4e4;
-  top: 30%;
+  top: 20%;
 }
 #answer-row .tile {
   list-style-type: none;
@@ -225,7 +225,7 @@ header #timer-num {
   flex-direction: row;
   min-width: 50%;
   position: relative;
-  top: 50%;
+  top: 40%;
   margin: 0 auto;
   height: 100px;
   perspective: 1px;
@@ -286,7 +286,7 @@ footer {
   bottom: 0;
   width: 100%;
   font-size: 1.5em;
-  top: 50%;
+  top: 40%;
   #theme-label {
     margin-right: auto;
   }
@@ -409,7 +409,56 @@ to{
   }
 }
 
-@media only screen and (max-width: 525px) {
+@media only screen and (max-width: 700px) {
+  #tile-row {
+    width: 450px;
+    height: 50px;
+  }
+
+  .tile {
+    padding:0.2rem;
+    height: 60px;
+    width: 70px;
+    line-height: 1em;
+    box-shadow: 0px 20px 50px #555;
+    transform: rotateX(50deg) scale(0.85);
+    perspective: 800px;
+  }
+  #answer-row {
+    width: 450px;
+    height: 50px;
+  }
+  #answer-row .tile {
+    height: 60px;
+    width: 70px;
+    line-height: 1.5em;
+    font-size: 2em;
+  }
+  #answer-row .tile-value {
+    font-size: 0.4em;
+    text-align: center;
+    padding-left: 0;
+    transform: translateX(0.8em) translateY(1.5em);
+  }
+  .tile-value {
+    display: inline-block;
+    font-size: 0.5em;
+    transform: translateX(0.3em) translateY(0.9em);
+  }
+  footer {
+    top: 50%;
+  }
+  .info {
+    font-size: 1em;
+    line-height: 25em;
+  }
+  footer button {
+    font-size: 0.5em;
+  }
+}
+
+
+@media only screen and (max-width: 450px) {
   #tile-row {
     width: 350px;
     height: 50px;
@@ -455,6 +504,9 @@ to{
     font-size: 0.5em;
   }
 }
+
+
+
 
 @media only screen and (max-width: 320px) {
   #tile-row {
