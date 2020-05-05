@@ -196,12 +196,13 @@ function updateTimer(time, id) {
   document.getElementById("timer-num").innerHTML = `${time} `;
   if (time <= 0) {
     clearInterval(id);
+    document.getElementById("content").classList.add("darken");
   }
 }
 
 function gameLoop() {
   generateTiles();
-  startTimer(123);
+  startTimer(5);
 }
 
 /* When tile clicked play animation that adds it to the answer grid */
