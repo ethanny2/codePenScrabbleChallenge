@@ -1,5 +1,7 @@
 import "../sass/style.scss";
 import "../static/html/index.html";
+import sucessSound from "../static/audio/sucess.mp3";
+import failureSound from "../static/audio/failure.mp3";
 /*
  Distributon of tiles found here
  https://www.thesprucecrafts.com/how-many-letter-tiles-are-in-scrabble-410933
@@ -8,6 +10,8 @@ import "../static/html/index.html";
 */
 const KEY = "WORDS";
 const WORDS = createDictionary();
+const success = new Audio(sucessSound);
+const failure = new Audio(failureSound);
 let guessedWords = [];
 // "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 const tileFrequencies =
@@ -131,9 +135,11 @@ function getWordValue() {
     addToScore(total);
     displayScoreEffect(total);
     guessedWords.push(word);
+    success.play();
   } else {
     answerRow.classList.toggle("wrong", true);
     console.log("Adding shake aniamtion");
+    failure.play();
     setTimeout(() => {
       answerRow.classList.toggle("wrong");
     }, 800);

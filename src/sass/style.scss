@@ -127,9 +127,7 @@ body {
   transition: background 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 header {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -349,6 +347,29 @@ footer button:active {
       margin:0.4rem 2rem;
     }
   }
+}
+.wordbank{
+  border:1px solid red;
+  width:100%;
+  max-height: height 2em;
+  height:2rem;
+  display:flex;
+  align-items: center;
+  text-transform: uppercase;
+  font-family: Bookman, Geneva, Tahoma, sans-serif;
+  font-weight: 800;
+  animation: moveRight 3s;
+  animation-iteration-count: infinite;
+
+}
+
+@keyframes moveRight{
+from{
+  margin-left:0;
+}
+to{
+  margin-left: 100%;
+}
 }
 
 /* Loading Animation from https://loading.io/css/ */
