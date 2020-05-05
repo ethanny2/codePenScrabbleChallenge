@@ -3,13 +3,15 @@ import "../static/html/index.html";
 /*
  Distributon of tiles found here
  https://www.thesprucecrafts.com/how-many-letter-tiles-are-in-scrabble-410933
- Since my version doesn't use blank tiles I just omit them (So its out of 98 tiles)
- Added extra U and S added 2 extra Es
+ This distribution doesn't work well for my game where you cannot continue building upon other
+ words, frequency has been tuned from base scrabble game
 */
 const KEY = "WORDS";
 const WORDS = createDictionary();
+let guessedWords = [];
+// "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 const tileFrequencies =
-  "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
+  "AAAAAAAAABBBBBCCCCCCDDDDDEEEEEEEEEFFFFFGGGGGHHHHHIIIIIIIIJJJJKKKKKLLLLLLLMMMMMNNNNNNOOOOOOOOPPPPPPQQRRRRRSSSSSTTTTTTTUUUUUUUUVVVWWWWXYZ";
 let playTiles; //Array of tiles
 const tileValueMap = new Map();
 tileValueMap.set("1", ["A", "E", "I", "O", "U", "L", "N", "S", "T", "R"]);
@@ -128,6 +130,7 @@ function getWordValue() {
   if (!isNaN(newScore) && found) {
     addToScore(total);
     displayScoreEffect(total);
+    guessedWords.push(word);
   } else {
     answerRow.classList.toggle("wrong", true);
     console.log("Adding shake aniamtion");
