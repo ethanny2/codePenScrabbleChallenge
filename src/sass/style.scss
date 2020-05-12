@@ -108,6 +108,15 @@
   }
 }
 
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -294,7 +303,6 @@ footer {
 
 button {
   font-family: Bookman, Geneva, Tahoma, sans-serif;
-
   text-transform: uppercase;
   padding: 0.5%;
   width: 10%;
@@ -307,7 +315,7 @@ button {
   box-shadow: 0px 5px 2px #89968f;
   position: relative;
   top: 0px;
-  transition: all ease 0.1s;
+  transition: top ease 0.1s; 
 }
 button:active {
   box-shadow: 0 3px 0 #89968f;
@@ -348,28 +356,6 @@ button:active {
     }
   }
 }
-.wordbank {
-  border: 1px solid red;
-  width: 100%;
-  max-height: height 2em;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  text-transform: uppercase;
-  font-family: Bookman, Geneva, Tahoma, sans-serif;
-  font-weight: 800;
-  animation: moveRight 3s;
-  animation-iteration-count: infinite;
-}
-
-@keyframes moveRight {
-  from {
-    margin-left: 0;
-  }
-  to {
-    margin-left: 100%;
-  }
-}
 
 /* Loading Animation from https://loading.io/css/ */
 .lds-ring {
@@ -399,12 +385,55 @@ button:active {
 .lds-ring div:nth-child(3) {
   animation-delay: -0.15s;
 }
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
+
+.game-over {
+  color:white;
+  position: absolute;
+  background: #47484bf5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  transition:opacity 3s;
+  a{
+    text-decoration: none;
+    color:black;
   }
-  100% {
-    transform: rotate(360deg);
+  h1 {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+  }
+  &-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+  button {
+    margin: 0 5rem;
+    padding: 0.4rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  &-score {
+    margin-top: 1.2rem;
+  }
+  &.hide{
+    left:-9999px;
+  }
+}
+
+#content {
+  width: 100%;
+  height: 100%;
+  &.darken {
+    transition: filter 0.4s;
+    filter: blur(3px);
   }
 }
 
@@ -412,6 +441,9 @@ button:active {
   #tile-row {
     width: 450px;
     height: 50px;
+  }
+  .game-over {
+    width: 75%;
   }
 
   .tile {
@@ -461,6 +493,12 @@ button:active {
     width: 350px;
     height: 50px;
   }
+  .game-over {
+    width: 100%;
+    button {
+      margin: 0 1rem;
+    }
+  }
 
   .tile {
     height: 50px;
@@ -509,7 +547,6 @@ button:active {
     height: 50px;
     padding: 0 1% 0 1%;
   }
-
   .tile {
     font-size: 2.2rem;
     height: 50px;
@@ -541,45 +578,5 @@ button:active {
     button {
       margin: 0 1rem;
     }
-  }
-}
-
-.game-over {
-  z-index: 1;
-  color: white;
-  position: absolute;
-  background: #47484bf5;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
-  height: 15rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  .tile {
-    height: 8rem;
-    width: 8rem;
-    font-size: 3.5rem;
-    padding: 2rem;
-    cursor: initial;
-    color: black;
-  }
-  &-buttons{
-  }
-  button {
-    margin: 0 5rem;
-    padding: 0.4rem;
-    font-size:1rem; 
-  }
-}
-
-#content {
-  width: 100%;
-  height: 100%;
-  &.darken {
-    transition: filter 0.4s;
-    filter: blur(3px);
   }
 }

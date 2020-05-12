@@ -12,6 +12,7 @@ const KEY = "WORDS";
 const WORDS = createDictionary();
 const success = new Audio(sucessSound);
 const failure = new Audio(failureSound);
+const TIMER_SECONDS = 120;
 let guessedWords = [];
 // "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 const tileFrequencies =
@@ -196,7 +197,7 @@ function updateTimer(time, id) {
   document.getElementById("timer-num").innerHTML = `${time} `;
   if (time <= 0) {
     clearInterval(id);
-    document.getElementById("content").classList.add("darken");
+    toggleGameOverModal();
   }
 }
 
@@ -274,15 +275,33 @@ function findAbsPos(obj) {
   return [curleft, curtop];
 }
 
+function toggleGameOverModal() {
+  document.getElementById("content").classList.toggle("darken");
+  document.querySelector(".game-over").classList.toggle("hide");
+  const scoreElem = document.getElementById("score");
+  let finalScore = scoreElem.innerText;
+  document.getElementById("final-score").innerText = finalScore;
+  scoreElem.innerText = 0;
+  document.getElementById(
+    "twitter-share"
+  ).href = `https://twitter.com/intent/tweet?text=I+scored+${finalScore}+playing+scrabble+lite!&hashtags=scrabblelite`;
+}
+/* Resets game after finishing*/
+function resetGame() {
+  generateTiles();
+  startTimer(TIMER_SECONDS);
+  toggleGameOverModal();
+}
+
 document.querySelector("#theme").addEventListener("change", e => {
   document.body.style.background = e.target.value;
 });
-
 document.querySelector("#tile-row").addEventListener("click", event => {
   if (event.target && event.target.classList.contains("tile")) {
     insertLetter(event.target);
   }
 });
+document.querySelector("#reset").addEventListener("click", resetGame);
 document.getElementById("refresh").addEventListener("click", generateTiles);
 document.getElementById("submit").addEventListener("click", getWordValue);
 /*Enter key submits word */

@@ -1,13 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Scrabble Lite!</title>
+    <meta
+      name="description"
+      content="Single player javascript word matching game inspired by scrabble!"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=News+Cycle:400,700&display=swap"
       rel="stylesheet"
     />
+    <meta itemprop="name" content="Scrabble Lite" />
+    <meta
+      itemprop="description"
+      content="Single player javascript word matching game inspired by scrabble!"
+    />
+    <!-- change image link-->
+    <meta itemprop="image" content="http://i.imgur.com/foAIsb8.png" />
+
+    <!-- Facebook Meta Tags -->
+    <meta
+      property="og:url"
+      content="https://threejs-webpack-boilerplate.netlify.com"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Scrabble Lite" />
+    <meta
+      property="og:description"
+      content="Single player javascript word matching game inspired by scrabble!"
+    />
+    <meta property="og:image" content="http://i.imgur.com/foAIsb8.png" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Scrabble Lite" />
+    <meta
+      name="twitter:description"
+      content="Single player javascript word matching game inspired by scrabble!"
+    />
+    <meta name="twitter:image" content="http://i.imgur.com/foAIsb8.png" />
   </head>
   <body>
     <div class="loading">
@@ -22,7 +55,7 @@
         <ul class="loading-instructions">
           <li>Click or tap to place/remove tiles</li>
           <li>
-            Desktop users press ENTER to submit
+            Desktop users can press ENTER to submit
           </li>
           <li>Mobile users can double tap anywhere to submit</li>
         </ul>
@@ -46,26 +79,16 @@
       </footer>
     </section>
 
-    <div class="game-over">
+    <div class="game-over hide">
       <h1>Game Over!</h1>
       <!-- <div class="tile">127</div> -->
       <div class="game-over-buttons">
         <button id="reset">Reset</button>
         <button>
-          <a
-            href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-            class="twitter-share-button"
-            data-url="https://threejs-webpack-boilerplate.netlify.com/"
-            data-show-count="false"
-            >Share</a
-          >
+          <a id="twitter-share" href="#" target="_blank">Share</a>
         </button>
-        <script
-          async
-          src="https://platform.twitter.com/widgets.js"
-          charset="utf-8"
-        ></script>
       </div>
+      <p class="game-over-score">Score: <span id="final-score">0</span></p>
     </div>
   </body>
 </html>
