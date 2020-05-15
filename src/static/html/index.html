@@ -54,6 +54,7 @@
         <h2 class="loading-title">Loading...</h2>
         <ul class="loading-instructions">
           <li>Click or tap to place/remove tiles</li>
+          <li>Repeated words are not counted</li>
           <li>
             Desktop users can press ENTER to submit
           </li>
@@ -65,6 +66,10 @@
       <h2 id="score-animation"></h2>
       <header>
         <h1 id="timer"><span id="timer-num">0 </span>Seconds</h1>
+        <label for="sound"
+          >Sound:
+          <input type="checkbox" name="sound" id="sound" checked />
+        </label>
         <h1 id="score">0</h1>
       </header>
       <div id="answer-row"></div>
@@ -74,6 +79,7 @@
           >Theme:
           <input type="color" name="theme" id="theme" />
         </label>
+
         <button id="refresh">Refresh</button>
         <button id="submit">Submit</button>
       </footer>

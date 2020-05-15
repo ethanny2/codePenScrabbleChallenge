@@ -130,10 +130,10 @@ function getWordValue() {
     word += val.innerText.charAt(0);
   });
   let newScore = parseInt(score.innerText, 10) + total;
-  console.log(word);
-  let found = WORDS.find(e => e === word.toLowerCase());
-  console.log(found);
-  if (!isNaN(newScore) && found) {
+  word = word.toLowerCase();
+  let wordExist = WORDS.find(e => e === word);
+  let wordUsedBefore = guessedWords.includes(word);
+  if (!isNaN(newScore) && wordExist && !wordUsedBefore && word.length > 1) {
     addToScore(total);
     displayScoreEffect(total);
     guessedWords.push(word);
@@ -203,7 +203,7 @@ function updateTimer(time, id) {
 
 function gameLoop() {
   generateTiles();
-  startTimer(5);
+  startTimer(1000);
 }
 
 /* When tile clicked play animation that adds it to the answer grid */
@@ -286,6 +286,15 @@ function toggleGameOverModal() {
     "twitter-share"
   ).href = `https://twitter.com/intent/tweet?text=I+scored+${finalScore}+playing+scrabble+lite!&hashtags=scrabblelite`;
 }
+
+function toggleSound() {
+  const choice = document.getElementById("sound").checked;
+  console.log(choice);
+  console.log(typeof choice);
+  success.muted = !choice;
+  failure.muted = !choice;
+}
+
 /* Resets game after finishing*/
 function resetGame() {
   generateTiles();
@@ -302,6 +311,7 @@ document.querySelector("#tile-row").addEventListener("click", event => {
   }
 });
 document.querySelector("#reset").addEventListener("click", resetGame);
+document.querySelector("#sound").addEventListener("change", toggleSound);
 document.getElementById("refresh").addEventListener("click", generateTiles);
 document.getElementById("submit").addEventListener("click", getWordValue);
 /*Enter key submits word */
