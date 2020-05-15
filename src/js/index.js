@@ -230,22 +230,20 @@ function insertLetter(tile) {
 }
 
 function removeLetter(tile) {
+  /* eslint-disable-next-line */
+  // debugger;
   let orignalTile = Array.from(
     document.getElementById("tile-row").children
   ).find(elem => elem.id === tile.id);
-  let animation = tile.cloneNode(true);
   let endRect = findAbsPos(orignalTile);
   let startRect = findAbsPos(tile);
-  animation.style.position = "absolute";
-  animation.style.left = startRect[0] + "px";
-  animation.style.top = startRect[1] + "px";
-  tile.remove();
+  tile.style.position = "fixed";
+  tile.style.left = startRect[0] + "px";
   computeVector(startRect, endRect);
-  animation.classList.add("removeTileAnim");
-  document.body.appendChild(animation);
+  tile.classList.add("removeTileAnim");
   setTimeout(() => {
     orignalTile.classList.toggle("tileHidden");
-    document.body.removeChild(animation);
+    tile.remove();
   }, 500);
 }
 
