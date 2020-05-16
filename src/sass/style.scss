@@ -56,7 +56,7 @@
   100% {
     transform: translate3d(var(--tx), var(--ty), 0) rotateX(0deg) scale(1);
     perspective: none;
-    visibility: hidden;
+    //visibility: hidden;
   }
 }
 
@@ -252,6 +252,7 @@ header #timer-num {
   width: 700px;
 }
 .tile {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -261,11 +262,9 @@ header #timer-num {
   width: 100px;
   text-align: center;
   font-family: Bookman, Geneva, Tahoma, sans-serif;
-
   font-weight: 700;
   font-size: 2.5em;
   line-height: 2.5em;
-  /* transition: 0.5s all ease; */
   transition: 0.5s transform ease;
   box-shadow: 0px 20px 50px #555;
   transform: rotateX(60deg) scale(0.7);
@@ -273,6 +272,11 @@ header #timer-num {
   cursor: pointer;
   max-width: 100px;
   z-index: 1;
+  &-clone{
+    position: absolute;
+    box-shadow: none;
+    visibility: hidden;
+  }
 }
 .tile-value {
   display: inline-block;

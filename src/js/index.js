@@ -175,66 +175,56 @@ function generateTiles() {
     );
   }
   playTiles = [...temp];
-  playTiles.forEach(tile => {
+  playTiles.forEach((tile, index) => {
     id++;
     letterVal = getLetterValue(tile);
-    markup = `<li id="tile-${id}" class="tile" >${tile} <span class="tile-value"> ${letterVal}</span></li>`;
+    markup = `<li  class="tile tile-${index}" >
+    ${tile} 
+    <span class="tile-value"> ${letterVal}</span>
+    </li>
+    <li class="tile tile-${index} tile-clone" >${tile} <span class="tile-value"> ${letterVal}</span></li>
+    `;
     startRow.innerHTML += markup;
   });
 }
 
-function startTimer(time) {
-  let id = setInterval(() => {
-    //Update view every 1s
-    time -= 1;
-    updateTimer(time, id);
-  }, 1000);
-}
-
-/* Updates view of timer
-time remaining passed in in seconds*/
-function updateTimer(time, id) {
-  document.getElementById("timer-num").innerHTML = `${time} `;
-  if (time <= 0) {
-    clearInterval(id);
-    toggleGameOverModal();
-  }
-}
-
-function gameLoop() {
-  generateTiles();
-  startTimer(1000);
-}
-
 /* When tile clicked play animation that adds it to the answer grid */
 function insertLetter(tile) {
-  let inserted = tile.cloneNode(true);
-  let animation = tile.cloneNode(true);
+  //Find class with "-"" in name
+  let className = Array.from(tile.classList).find(e => e.includes("-"));
+  let cloneTile = document.querySelector(`.${className}.tile-clone`);
   let startRect = findAbsPos(tile);
-  animation.style.position = "absolute";
-  animation.style.left = startRect[0] + "px";
-  animation.style.top = startRect[1] + "px";
-  inserted.classList.toggle("tileHidden");
-  document.getElementById("answer-row").appendChild(inserted);
-  let endRect = findAbsPos(inserted);
-  computeVector(startRect, endRect);
+  const width = Number(cloneTile.offsetWidth);
+  const height = Number(cloneTile.offsetHeight);
+  const offset = Number(className.substr(className.indexOf("-") + 1));
+  cloneTile.style.position = "fixed";
+  cloneTile.style.left = width * offset + "px";
+  cloneTile.style.visibility = "inherit";
   tile.classList.toggle("tileHidden");
-  document.body.appendChild(animation);
 
-  animation.classList.add("setTileAnim");
+  let endNode = document.createElement("div");
+  endNode.style.height = `${height}px`;
+  endNode.style.width = `${width}px`;
+  endNode.style.background = "red";
+  document.getElementById("answer-row").appendChild(endNode);
+
+  let endRect = findAbsPos(endNode);
+  endNode.remove();
+  computeVector(startRect, endRect);
+  cloneTile.classList.add("setTileAnim");
   /* Wait for the animation to finsh*/
   setTimeout(() => {
-    inserted.classList.toggle("tileHidden");
-    document.body.removeChild(animation);
+    cloneTile.classList.toggle("setTileAnim");
+    cloneTile.style.position = "initial ";
+    document.getElementById("answer-row").appendChild(cloneTile);
   }, 500);
 }
 
 function removeLetter(tile) {
-  /* eslint-disable-next-line */
-  // debugger;
-  let orignalTile = Array.from(
-    document.getElementById("tile-row").children
-  ).find(elem => elem.id === tile.id);
+  const className = Array.from(tile.classList).find(e => e.includes("-"));
+  const orignalTile = document.querySelector(
+    `.tile:not(.tile-clone).${className}`
+  );
   let endRect = findAbsPos(orignalTile);
   let startRect = findAbsPos(tile);
   tile.style.position = "fixed";
@@ -243,7 +233,9 @@ function removeLetter(tile) {
   tile.classList.add("removeTileAnim");
   setTimeout(() => {
     orignalTile.classList.toggle("tileHidden");
-    tile.remove();
+    tile.style.cssText = "";
+    tile.classList.remove("removeTileAnim");
+    document.getElementById("tile-row").append(tile);
   }, 500);
 }
 
@@ -298,6 +290,29 @@ function resetGame() {
   generateTiles();
   startTimer(TIMER_SECONDS);
   toggleGameOverModal();
+}
+
+function startTimer(time) {
+  let id = setInterval(() => {
+    //Update view every 1s
+    time -= 1;
+    updateTimer(time, id);
+  }, 1000);
+}
+
+/* Updates view of timer
+time remaining passed in in seconds*/
+function updateTimer(time, id) {
+  document.getElementById("timer-num").innerHTML = `${time} `;
+  if (time <= 0) {
+    clearInterval(id);
+    toggleGameOverModal();
+  }
+}
+
+function gameLoop() {
+  generateTiles();
+  startTimer(1000);
 }
 
 document.querySelector("#theme").addEventListener("change", e => {
