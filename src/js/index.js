@@ -54,29 +54,6 @@ function createDictionary() {
   return ret;
 }
 
-function validateWordBinary(word) {
-  console.log("Calling validateWordBinary " + word);
-  let targetWord = word.toLowerCase();
-  console.log("TESTING WITH FIND " + WORDS.find(e => e === targetWord));
-  let start = 0;
-  let end = WORDS.length - 1;
-  let mid;
-  while (start <= end) {
-    mid = parseInt((start + end) / 2, 10);
-    let curWord = WORDS[mid];
-    console.log(curWord);
-    console.log(`Start: ${start}   END: ${end}   MID: ${mid}`);
-    if (curWord === targetWord) {
-      return true;
-    } else if (curWord < targetWord) {
-      start = mid + 1;
-    } else {
-      end = mid - 1;
-    }
-  }
-  return false;
-}
-
 function getLetterValue(letter) {
   for (const [key, val] of tileValueMap) {
     if (val.find(temp => temp === letter)) {
