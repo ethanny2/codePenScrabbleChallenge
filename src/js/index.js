@@ -2,17 +2,16 @@ import "../sass/style.scss";
 import "../static/html/index.html";
 import sucessSound from "../static/audio/sucess.mp3";
 import failureSound from "../static/audio/failure.mp3";
+
 /*
  Distributon of tiles found here
  https://www.thesprucecrafts.com/how-many-letter-tiles-are-in-scrabble-410933
  This distribution doesn't work well for my game where you cannot continue building upon other
  words, frequency has been tuned from base scrabble game
 */
-const KEY = "WORDS";
-const WORDS = createDictionary();
 const success = new Audio(sucessSound);
 const failure = new Audio(failureSound);
-const TIMER_SECONDS = 120;
+const TIMER_SECONDS = 10;
 let guessedWords = [];
 // "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 const tileFrequencies =
@@ -27,31 +26,18 @@ tileValueMap.set("5", ["K"]);
 tileValueMap.set("8", ["J", "X"]);
 tileValueMap.set("10", ["Q", "Z"]);
 
-createDictionary();
-
-/*
-  DYNAMIC IMPORTS WITH import()!
-  ------------------------------
-  words_dictionary.json ~ 400,000 key-values
-  Instead of loading a 7MB JSON & converting to an Array each time
-  we store the parsed array in the client side
-  localStorage and we conditionally import the JSON
-  data at RUNTIME using ES2020 dynamic import() if its not
-  found!
-*/
-function createDictionary() {
-  let ret = [];
-  if (!localStorage.getItem(KEY)) {
-    let wordData = import("../static/data/words_dictionary.json")
-      .then(module => module.default)
-      .then(data => {
-        ret = Object.keys(data);
-        localStorage.setItem(KEY, JSON.stringify(ret));
-        return ret;
-      });
-  }
-  ret = JSON.parse(localStorage.getItem(KEY));
-  return ret;
+async function checkWord(word) {
+  console.log("CALLING SERVERLESS FUNCTION CLIENT SIDE!");
+  const options = {
+    method: "POST",
+    body: JSON.stringify({
+      word: word
+    })
+  };
+  const request = await fetch("/.netlify/functions/validateWord", options);
+  const data = await request.json();
+  console.log(data);
+  return data;
 }
 
 function getLetterValue(letter) {
@@ -96,7 +82,7 @@ function addToScore(wordValue) {
   }
 }
 
-function getWordValue() {
+async function getWordValue() {
   let score = document.getElementById("score");
   let answerRow = document.getElementById("answer-row");
   let answerLetterArr = Array.from(answerRow.children);
@@ -108,7 +94,7 @@ function getWordValue() {
   });
   let newScore = parseInt(score.innerText, 10) + total;
   word = word.toLowerCase();
-  let wordExist = WORDS.find(e => e === word);
+  let wordExist = await checkWord(word);
   let wordUsedBefore = guessedWords.includes(word);
   if (!isNaN(newScore) && wordExist && !wordUsedBefore && word.length > 1) {
     addToScore(total);
@@ -289,7 +275,7 @@ function updateTimer(time, id) {
 
 function gameLoop() {
   generateTiles();
-  startTimer(1000);
+  startTimer(TIMER_SECONDS);
 }
 
 document.querySelector("#theme").addEventListener("change", e => {

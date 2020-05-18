@@ -147,13 +147,11 @@ header {
   align-items: center;
   font-size: 0.8em;
   color: #0e0c0c;
-  label{
+  label {
     font-weight: 800;
-    font-size:1.5em;
-    padding:1rem;
-  
+    font-size: 1.5em;
+    padding: 1rem;
   }
-
 }
 header #score {
   // flex-basis: 10%;
@@ -272,7 +270,7 @@ header #timer-num {
   cursor: pointer;
   max-width: 100px;
   z-index: 1;
-  &-clone{
+  &-clone {
     position: absolute;
     box-shadow: none;
     visibility: hidden;
@@ -523,7 +521,6 @@ button:active {
     button {
       margin: 0 1rem;
     }
- 
   }
 
   .tile {

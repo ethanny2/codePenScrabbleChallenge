@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
     "build": " npm run clean && webpack --config webpack.prod.js",
-    "build-dll": "webpack --config webpack.vendor.config.js",
     "start-dev": "webpack-dev-server --open --config webpack.dev.js"
   },
   "repository": {
