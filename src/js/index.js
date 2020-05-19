@@ -11,9 +11,8 @@ import failureSound from "../static/audio/failure.mp3";
 */
 const success = new Audio(sucessSound);
 const failure = new Audio(failureSound);
-const TIMER_SECONDS = 10;
+const TIMER_SECONDS = 124;
 let guessedWords = [];
-// "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRRSSSSSTTTTTTUUUUUVVWWXYYZ";
 const tileFrequencies =
   "AAAAAAAAABBBBBCCCCCCDDDDDEEEEEEEEEFFFFFGGGGGHHHHHIIIIIIIIJJJJKKKKKLLLLLLLMMMMMNNNNNNOOOOOOOOPPPPPPQQRRRRRSSSSSTTTTTTTUUUUUUUUVVVWWWWXYZ";
 let playTiles; //Array of tiles
@@ -27,7 +26,6 @@ tileValueMap.set("8", ["J", "X"]);
 tileValueMap.set("10", ["Q", "Z"]);
 
 async function checkWord(word) {
-  console.log("CALLING SERVERLESS FUNCTION CLIENT SIDE!");
   const options = {
     method: "POST",
     body: JSON.stringify({
@@ -119,7 +117,6 @@ async function getWordValue() {
 */
 function generateTiles() {
   let temp = "";
-  let id = 0;
   let markup;
   let startRow = document.getElementById("tile-row");
   let answerRow = document.getElementById("answer-row");
@@ -139,7 +136,6 @@ function generateTiles() {
   }
   playTiles = [...temp];
   playTiles.forEach((tile, index) => {
-    id++;
     letterVal = getLetterValue(tile);
     markup = `<li  class="tile tile-${index}" >
     ${tile} 
