@@ -150,7 +150,6 @@ function generateTiles() {
 /* When tile clicked play animation that adds it to the answer grid */
 function insertLetter(tile) {
   //Find class with "-"" in name
-  tile.classList.toggle("tileHidden");
   let className = Array.from(tile.classList).find(e => e.includes("-"));
   let cloneTile = document.querySelector(`.${className}.tile-clone`);
   let startRect = findAbsPos(tile);
@@ -172,6 +171,7 @@ function insertLetter(tile) {
   endNode.remove();
   computeVector(startRect, endRect);
   cloneTile.classList.add("setTileAnim");
+  tile.classList.toggle("tileHidden");
   /* Wait for the animation to finsh*/
   setTimeout(() => {
     cloneTile.classList.toggle("setTileAnim");
