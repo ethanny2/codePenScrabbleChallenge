@@ -150,14 +150,14 @@ function generateTiles() {
 /* When tile clicked play animation that adds it to the answer grid */
 function insertLetter(tile) {
   //Find class with "-"" in name
-  let className = Array.from(tile.classList).find(e => e.includes("-"));
-  let cloneTile = document.querySelector(`.${className}.tile-clone`);
-  let startRect = findAbsPos(tile);
+  const className = Array.from(tile.classList).find(e => e.includes("-"));
+  const cloneTile = document.querySelector(`.${className}.tile-clone`);
+  const relativeXPos = tile.offsetLeft;
+  const startRect = findAbsPos(tile);
   const width = Number(cloneTile.offsetWidth);
   const height = Number(cloneTile.offsetHeight);
-  const offset = Number(className.substr(className.indexOf("-") + 1));
-  cloneTile.style.position = "fixed";
-  cloneTile.style.left = width * offset + "px";
+  cloneTile.style.position = "absolute";
+  cloneTile.style.left = relativeXPos + "px";
   cloneTile.style.visibility = "inherit";
   cloneTile.style.zIndex = 5;
 
@@ -169,12 +169,13 @@ function insertLetter(tile) {
 
   let endRect = findAbsPos(endNode);
   endNode.remove();
+  tile.classList.toggle("tileHidden");
   computeVector(startRect, endRect);
   cloneTile.classList.add("setTileAnim");
-  tile.classList.toggle("tileHidden");
   /* Wait for the animation to finsh*/
   setTimeout(() => {
     cloneTile.classList.toggle("setTileAnim");
+    cloneTile.style.left = "";
     cloneTile.style.position = "initial ";
     document.getElementById("answer-row").appendChild(cloneTile);
   }, 500);
@@ -185,17 +186,17 @@ function removeLetter(tile) {
   const orignalTile = document.querySelector(
     `.tile:not(.tile-clone).${className}`
   );
-  let endRect = findAbsPos(orignalTile);
-  let startRect = findAbsPos(tile);
+  const endRect = findAbsPos(orignalTile);
+  const startRect = findAbsPos(tile);
   tile.style.zIndex = 5;
   tile.style.position = "fixed";
   tile.style.left = startRect[0] + "px";
   computeVector(startRect, endRect);
   tile.classList.add("removeTileAnim");
   setTimeout(() => {
-    orignalTile.classList.toggle("tileHidden");
     tile.style.cssText = "";
     tile.classList.remove("removeTileAnim");
+    orignalTile.classList.toggle("tileHidden");
     document.getElementById("tile-row").append(tile);
   }, 500);
 }
