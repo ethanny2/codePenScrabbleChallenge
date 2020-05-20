@@ -106,7 +106,13 @@ module.exports = {
     //Adds defer to js scripts to speed load times.
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: "defer"
-    })
+    }),
+    new CopyPlugin([
+      {
+        from: path.resolve(__dirname, "./functions"),
+        to: "./functions/"
+      }
+    ])
   ],
   optimization: {
     runtimeChunk: "single",

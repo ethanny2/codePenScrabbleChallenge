@@ -13,6 +13,9 @@ const imageminMozjpeg = require("imagemin-mozjpeg");
 module.exports = merge(common, {
   mode: "production",
   devtool: "cheap-module-eval-source-map",
+  node: {
+    fs: "empty"
+  },
   output: {
     // Contenthash substitution used for cache bursting
     filename: "js/[name].[contenthash].bundle.js",
