@@ -150,6 +150,7 @@ function generateTiles() {
 /* When tile clicked play animation that adds it to the answer grid */
 function insertLetter(tile) {
   //Find class with "-"" in name
+  tile.classList.toggle("tileHidden");
   let className = Array.from(tile.classList).find(e => e.includes("-"));
   let cloneTile = document.querySelector(`.${className}.tile-clone`);
   let startRect = findAbsPos(tile);
@@ -159,7 +160,7 @@ function insertLetter(tile) {
   cloneTile.style.position = "fixed";
   cloneTile.style.left = width * offset + "px";
   cloneTile.style.visibility = "inherit";
-  tile.classList.toggle("tileHidden");
+  cloneTile.style.zIndex = 5;
 
   let endNode = document.createElement("div");
   endNode.style.height = `${height}px`;
@@ -186,6 +187,7 @@ function removeLetter(tile) {
   );
   let endRect = findAbsPos(orignalTile);
   let startRect = findAbsPos(tile);
+  tile.style.zIndex = 5;
   tile.style.position = "fixed";
   tile.style.left = startRect[0] + "px";
   computeVector(startRect, endRect);
@@ -274,9 +276,6 @@ function gameLoop() {
   startTimer(TIMER_SECONDS);
 }
 
-document.querySelector("#theme").addEventListener("change", e => {
-  document.body.style.background = e.target.value;
-});
 document.querySelector("#tile-row").addEventListener("click", event => {
   if (event.target && event.target.classList.contains("tile")) {
     insertLetter(event.target);
