@@ -11,7 +11,7 @@ import failureSound from "../static/audio/failure.mp3";
 */
 const success = new Audio(sucessSound);
 const failure = new Audio(failureSound);
-const TIMER_SECONDS = 124;
+const TIMER_SECONDS = 104;
 let guessedWords = [];
 const tileFrequencies =
   "AAAAAAAAABBBBBCCCCCCDDDDDEEEEEEEEEFFFFFGGGGGHHHHHIIIIIIIIJJJJKKKKKLLLLLLLMMMMMNNNNNNOOOOOOOOPPPPPPQQRRRRRSSSSSTTTTTTTUUUUUUUUVVVWWWWXYZ";
@@ -233,7 +233,7 @@ function toggleGameOverModal() {
   scoreElem.innerText = 0;
   document.getElementById(
     "twitter-share"
-  ).href = `https://twitter.com/intent/tweet?text=I+scored+${finalScore}+playing+scrabble+lite!&hashtags=scrabblelite`;
+  ).href = `https://twitter.com/intent/tweet?text=I+scored+${finalScore}+playing+word+scramble!&hashtags=wordscramblejs`;
 }
 
 function toggleSound() {
