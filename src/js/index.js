@@ -188,9 +188,9 @@ function removeLetter(tile) {
   );
   const endRect = findAbsPos(orignalTile);
   const startRect = findAbsPos(tile);
-  tile.style.zIndex = 5;
-  tile.style.position = "fixed";
   tile.style.left = startRect[0] + "px";
+  tile.style.position = "fixed";
+  tile.style.zIndex = 5;
   computeVector(startRect, endRect);
   tile.classList.add("removeTileAnim");
   setTimeout(() => {
