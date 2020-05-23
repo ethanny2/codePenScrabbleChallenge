@@ -94,8 +94,7 @@
 @keyframes removeTile {
   0% {
     transform: rotateX(0deg);
-
-    perspective: none;
+    perspective: 100px;
   }
   50% {
     perspective: 200px;
@@ -274,6 +273,7 @@ header #timer-num {
     visibility: hidden;
     transform: rotateX(0deg);
     perspective: 500px;
+    box-shadow: none;
   }
 }
 .tile-value {
@@ -293,7 +293,7 @@ header #timer-num {
 
 .removeTileAnim {
   animation: removeTile 0.5s ease-in-out forwards;
-  z-index: 3;
+  // z-index: 3;
 }
 
 footer {

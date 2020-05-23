@@ -182,6 +182,7 @@ function insertLetter(tile) {
 }
 
 function removeLetter(tile) {
+  debugger;
   const className = Array.from(tile.classList).find(e => e.includes("-"));
   const orignalTile = document.querySelector(
     `.tile:not(.tile-clone).${className}`
