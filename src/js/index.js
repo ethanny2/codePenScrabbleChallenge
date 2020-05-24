@@ -76,7 +76,7 @@ function addToScore(wordValue) {
   let newScore = parseInt(score.innerText, 10) + wordValue;
   if (!isNaN(newScore)) {
     score.innerText = newScore;
-    generateTiles();
+    generateTiles(registerTileEvents);
   }
 }
 
@@ -110,12 +110,13 @@ async function getWordValue() {
   return [word, total];
 }
 
-/*Generates random letters for word based on actual scrabble data.
-100 tiles total , more weight to get vowels than consonants 
-7 tiles total
-//Creates markup and attaches
+/*
+  Generates random letters for word based on actual scrabble data.
+  100 tiles total , more weight to get vowels than consonants 
+  7 tiles total. 
+  -callback is to register animationend eventListeners on newly created tiles 
 */
-function generateTiles() {
+function generateTiles(callback) {
   let temp = "";
   let markup;
   let startRow = document.getElementById("tile-row");
@@ -145,6 +146,7 @@ function generateTiles() {
     `;
     startRow.innerHTML += markup;
   });
+  callback();
 }
 
 /* When tile clicked play animation that adds it to the answer grid */
@@ -170,20 +172,11 @@ function insertLetter(tile) {
 
   let endRect = findAbsPos(endNode);
   endNode.remove();
-  // tile.classList.toggle("tileHidden");
   computeVector(startRect, endRect);
   cloneTile.classList.add("setTileAnim");
-  /* Wait for the animation to finsh*/
-  setTimeout(() => {
-    cloneTile.classList.toggle("setTileAnim");
-    cloneTile.style.left = "";
-    cloneTile.style.position = "initial ";
-    document.getElementById("answer-row").appendChild(cloneTile);
-  }, 500);
 }
 
 function removeLetter(tile) {
-  // debugger;
   const className = Array.from(tile.classList).find(e => e.includes("-"));
   const orignalTile = document.querySelector(
     `.tile:not(.tile-clone).${className}`
@@ -195,12 +188,43 @@ function removeLetter(tile) {
   tile.style.zIndex = 5;
   computeVector(startRect, endRect);
   tile.classList.add("removeTileAnim");
-  setTimeout(() => {
-    tile.style.cssText = "";
-    tile.classList.remove("removeTileAnim");
-    orignalTile.classList.toggle("tileHidden");
-    document.getElementById("tile-row").append(tile);
-  }, 500);
+}
+
+function endRemoveLetter(tile) {
+  const className = Array.from(tile.classList).find(e => e.includes("-"));
+  const orignalTile = document.querySelector(
+    `.tile:not(.tile-clone).${className}`
+  );
+  tile.style.cssText = "";
+  tile.classList.remove("removeTileAnim");
+  orignalTile.classList.toggle("tileHidden");
+  document.getElementById("tile-row").append(tile);
+}
+
+function endInsertLetter(cloneTile) {
+  cloneTile.classList.toggle("setTileAnim");
+  cloneTile.style.left = "";
+  cloneTile.style.position = "initial ";
+  document.getElementById("answer-row").appendChild(cloneTile);
+}
+
+/* Listen for end of both animations */
+function registerTileEvents() {
+  Array.from(document.getElementsByClassName("tile-clone")).forEach(e => {
+    console.log(e);
+    e.addEventListener("animationend", event => {
+      const tile = event.target;
+      const className = Array.from(tile.classList).find(e =>
+        e.includes("remove")
+      );
+      console.log(className);
+      if (className) {
+        endRemoveLetter(tile);
+      } else {
+        endInsertLetter(tile);
+      }
+    });
+  });
 }
 
 /* Helper function to compute the distance of the 2D vector needed for 
@@ -238,7 +262,7 @@ function toggleGameOverModal() {
   scoreElem.innerText = 0;
   document.getElementById(
     "twitter-share"
-  ).href = `https://twitter.com/intent/tweet?text=I+scored+${finalScore}+playing+word+scramble!&hashtags=wordscramblejs`;
+  ).href = `https://twitter.com/intent/tweet?text=Scored:+${finalScore}+playing+word+scramble&url=https%3A%2F%2Fword-scramble.netlify.app`;
 }
 
 function toggleSound() {
@@ -251,7 +275,7 @@ function toggleSound() {
 
 /* Resets game after finishing*/
 function resetGame() {
-  generateTiles();
+  generateTiles(registerTileEvents);
   startTimer(TIMER_SECONDS);
   toggleGameOverModal();
 }
@@ -275,7 +299,7 @@ function updateTimer(time, id) {
 }
 
 function gameLoop() {
-  generateTiles();
+  generateTiles(registerTileEvents);
   startTimer(TIMER_SECONDS);
 }
 
@@ -286,7 +310,9 @@ document.querySelector("#tile-row").addEventListener("click", event => {
 });
 document.querySelector("#reset").addEventListener("click", resetGame);
 document.querySelector("#sound").addEventListener("change", toggleSound);
-document.getElementById("refresh").addEventListener("click", generateTiles);
+document.getElementById("refresh").addEventListener("click", () => {
+  generateTiles(registerTileEvents);
+});
 document.getElementById("submit").addEventListener("click", getWordValue);
 /*Enter key submits word */
 document.addEventListener("keypress", event => {
