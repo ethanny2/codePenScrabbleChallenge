@@ -10,8 +10,10 @@ import failureSound from "../static/audio/failure.mp3";
  words, frequency has been tuned from base scrabble game
 */
 const success = new Audio(sucessSound);
+success.muted = true;
 const failure = new Audio(failureSound);
-const TIMER_SECONDS = 104;
+failure.muted = true;
+const TIMER_SECONDS = 64;
 let guessedWords = [];
 const tileFrequencies =
   "AAAAAAAAABBBBBCCCCCCDDDDDEEEEEEEEEFFFFFGGGGGHHHHHIIIIIIIIJJJJKKKKKLLLLLLLMMMMMNNNNNNOOOOOOOOPPPPPPQQRRRRRSSSSSTTTTTTTUUUUUUUUVVVWWWWXYZ";
@@ -34,7 +36,6 @@ async function checkWord(word) {
   };
   const request = await fetch("/.netlify/functions/validateWord", options);
   const data = await request.json();
-  console.log(data);
   return data;
 }
 
@@ -47,7 +48,6 @@ function getLetterValue(letter) {
 }
 
 function displayScoreEffect(points) {
-  console.log("Displaying score effect");
   const anim = document.getElementById("score-animation");
   const converted = Number(points);
   if (converted > 0 && converted <= 3) {
@@ -101,7 +101,6 @@ async function getWordValue() {
     success.play();
   } else {
     answerRow.classList.toggle("wrong", true);
-    console.log("Adding shake aniamtion");
     failure.play();
     setTimeout(() => {
       answerRow.classList.toggle("wrong");
@@ -211,13 +210,11 @@ function endInsertLetter(cloneTile) {
 /* Listen for end of both animations */
 function registerTileEvents() {
   Array.from(document.getElementsByClassName("tile-clone")).forEach(e => {
-    console.log(e);
     e.addEventListener("animationend", event => {
       const tile = event.target;
       const className = Array.from(tile.classList).find(e =>
         e.includes("remove")
       );
-      console.log(className);
       if (className) {
         endRemoveLetter(tile);
       } else {
@@ -267,8 +264,6 @@ function toggleGameOverModal() {
 
 function toggleSound() {
   const choice = document.getElementById("sound").checked;
-  console.log(choice);
-  console.log(typeof choice);
   success.muted = !choice;
   failure.muted = !choice;
 }
