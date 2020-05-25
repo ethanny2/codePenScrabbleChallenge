@@ -50,16 +50,24 @@
     transform: rotateX(var(--deg)) perspective(var(--persp));
   }
   50% {
+    transform: rotateX(20deg);
+  }
+  100% {
+    transform: translate3d(var(--tx), var(--ty), 0) rotateX(0deg) scale(1);
+  }
+}
+@-webkit-keyframes setTile {
+  0% {
+    transform: rotateX(var(--deg)) perspective(var(--persp));
+  }
+  50% {
     perspective: 50px;
     transform: rotateX(20deg);
   }
   100% {
     transform: translate3d(var(--tx), var(--ty), 0) rotateX(0deg) scale(1);
-    perspective: none;
-    //visibility: hidden;
   }
 }
-
 @keyframes scoreAnimationLow {
   from {
     opacity: 1;
@@ -90,15 +98,29 @@
     text-transform: uppercase;
   }
 }
-
+@-webkit-keyframes removeTile {
+  0% {
+    transform: rotateX(0deg);
+    // perspective: 100px;
+  }
+  50% {
+    // perspective: 200px;
+    transform: rotateX(20deg);
+  }
+  100% {
+    transform: translate3d(var(--tx), var(--ty), 0) scale(var(--scale))
+      rotateX(var(--deg)) perspective(var(--persp));
+    visibility: hidden;
+  }
+}
 @keyframes removeTile {
   0% {
     transform: rotateX(0deg);
-    perspective: 100px;
+    // perspective: 100px;
   }
   50% {
     perspective: 200px;
-    transform: rotateX(20deg);
+    // transform: rotateX(20deg);
   }
   100% {
     transform: translate3d(var(--tx), var(--ty), 0) scale(var(--scale))
@@ -132,7 +154,9 @@ html {
 
 body {
   background: #dda7ab;
-  transition: background 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  perspective: 1  000px;
 }
 header {
   position: relative;
@@ -188,7 +212,7 @@ header #timer-num {
 
 .tileHidden {
   visibility: hidden;
-  z-index:-1;
+  z-index: -1;
 }
 
 #answer-row {
@@ -203,6 +227,7 @@ header #timer-num {
   height: 100px;
   background-color: #f1e4e4;
   top: 20%;
+
 }
 #answer-row .tile {
   height: 100px;
@@ -216,7 +241,6 @@ header #timer-num {
   transition: 0.5s transform ease;
   cursor: pointer;
   transform: rotateX(0deg);
-  perspective: 500px;
 }
 #answer-row.wrong {
   animation: shake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97);
@@ -272,7 +296,6 @@ header #timer-num {
     box-shadow: none;
     visibility: hidden;
     transform: rotateX(0deg);
-    perspective: 500px;
     box-shadow: none;
   }
 }
@@ -288,11 +311,13 @@ header #timer-num {
 
 .setTileAnim {
   animation: setTile 0.5s ease-in-out;
+  -webkit-animation: setTile 0.5s ease-in-out;
   z-index: 3;
 }
 
 .removeTileAnim {
-  animation: removeTile 0.5s ease-in-out forwards;
+  animation: removeTile 0.5s forwards;
+  -webkit-animation: removeTile 0.5s forwards;
   // z-index: 3;
 }
 

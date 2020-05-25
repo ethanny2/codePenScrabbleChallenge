@@ -160,6 +160,7 @@ function insertLetter(tile) {
   cloneTile.style.left = relativeXPos + "px";
   cloneTile.style.visibility = "inherit";
   cloneTile.style.zIndex = 5;
+  tile.classList.toggle("tileHidden");
 
   let endNode = document.createElement("div");
   endNode.style.height = `${height}px`;
@@ -169,7 +170,7 @@ function insertLetter(tile) {
 
   let endRect = findAbsPos(endNode);
   endNode.remove();
-  tile.classList.toggle("tileHidden");
+  // tile.classList.toggle("tileHidden");
   computeVector(startRect, endRect);
   cloneTile.classList.add("setTileAnim");
   /* Wait for the animation to finsh*/
@@ -182,7 +183,7 @@ function insertLetter(tile) {
 }
 
 function removeLetter(tile) {
-  debugger;
+  // debugger;
   const className = Array.from(tile.classList).find(e => e.includes("-"));
   const orignalTile = document.querySelector(
     `.tile:not(.tile-clone).${className}`
