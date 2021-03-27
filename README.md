@@ -23,10 +23,10 @@ Since the "back-end" portion of the application is just a single route/function 
 - webpack 4 
 ## Concepts
 
-## webpack 4 bundling
+### webpack 4 bundling
 
 Using my own custom webpack 4 dev and production configuration to have a local
-dev-server with hot module reloading and optimizied production build with
+dev-server with [hot module replacement](https://webpack.js.org/concepts/hot-module-replacement/) and optimizied production build with
 minification, auto-prefixing for CSS properties and more.
 
 
