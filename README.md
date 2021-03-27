@@ -2,7 +2,7 @@
 
 # Vanilla JS + JAM Stack Scrabble Lite Game
 
-##[Live Site](https://word-scramble.netlify.app/)
+## [https://word-scramble.netlify.app/](https://word-scramble.netlify.app/)
 
 <p align="center">
   <img width="460" height="300" src="https://media2.giphy.com/media/KzEePAHteq4F0QLprM/giphy.gif" alt="Demo gif">
